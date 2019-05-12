@@ -1,0 +1,50 @@
+/******************************************************************
+Site Name:
+Author:
+
+Stylesheet: Tablet Landscape Stylsheet
+
+******************************************************************/
+html {
+	&.theme-dark {
+		.entry-content.has-content-secondary {
+			.content-secondary {
+				border-left-color:$border-color-theme-dark;
+			}
+		}
+	}
+}
+#container {
+	#content {
+		padding-top:$logo-height + $logo-top-padding + $gutter1024;
+	}
+}
+#main {
+	margin-bottom:$gutter1024;
+}
+.wrap {
+	margin:0 $gutter1024;
+}
+.page-title {
+	margin:0 0 $gutter1024;
+}
+
+.has-content-secondary {
+	display:flex;
+	.content-primary {
+		flex:0 0 60%;
+		@include box-sizing;
+		padding-right:$gutter1024;
+		margin-bottom:0;
+	}
+	.content-secondary {
+		flex:0 0 40%;
+		@include box-sizing;
+		padding-left:$gutter1024;
+		border-left:1px solid $border-color;
+	}
+}
+.widget {
+	margin-bottom:$gutter1024;
+	padding-bottom:$gutter1024;
+}

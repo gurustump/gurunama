@@ -1,0 +1,181 @@
+/******************************************************************
+Site Name:
+Author:
+
+Stylesheet: Mixins Stylesheet
+
+This is where you can take advantage of Sass' great features: Mixins.
+I won't go in-depth on how they work exactly,
+there are a few articles below that will help do that. What I will
+tell you is that this will help speed up simple changes like
+changing a color or adding CSS3 techniques gradients.
+
+A WORD OF WARNING: It's very easy to overdo it here. Be careful and
+remember less is more.
+
+Helpful:
+http://sachagreif.com/useful-sass-mixins/
+http://thesassway.com/intermediate/leveraging-sass-mixins-for-cleaner-code
+http://web-design-weekly.com/blog/2013/05/12/handy-sass-mixins/
+
+******************************************************************/
+
+
+/*********************
+TRANSITION
+*********************/
+
+// defining prefixes so we can use them in mixins below
+$prefixes: ("-webkit-", "-moz-", "-ms-", "-o-",  "");
+
+@mixin transition($transition...) {
+	@each $prefix in $prefixes {
+		#{$prefix}transition: $transition;
+	}
+}
+
+@mixin transition-delay($transition-delay...) {
+	@each $prefix in $prefixes {
+		#{$prefix}transition-delay: $transition-delay;
+	}
+}
+
+@mixin transform($transform...) {
+	@each $prefix in $prefixes {
+		#{$prefix}transform: $transform;
+	}
+}
+
+@mixin v-center {
+	@include transform(translateY(-50%));
+	position:relative;
+	top:50%;
+}
+
+/*********************
+CSS3 GRADIENTS
+*********************/
+
+@mixin linear-gradient($from: #dfdfdf, $to: #f8f8f8, $vstart:false, $vend:false, $hstart:false, $hend:false ) {
+	$fromDirectionString: "";
+	$toDirectionString: "";
+	@if $vstart and $vstart != 'none' and $vend and $vend != 'none' and $hstart and $hend {
+		$fromDirectionString: unquote($hstart) unquote($vstart) unquote(",");
+		$toDirectionString: to unquote($hend) unquote($vend) unquote(",");
+	} @else if $hstart or $hend {
+		$fromDirectionString: unquote($hstart) unquote(",");
+		$toDirectionString: to unquote($hend) unquote(",");
+	}
+	@else if $vstart or $vend {
+		$fromDirectionString: unquote($vstart) unquote(",");
+		$toDirectionString: to unquote($vend) unquote(",");
+	} @else {
+		$fromDirectionString:unquote(" ");
+		$toDirectionString:unquote(" ");
+	}
+	background-color: $from;
+	background-image: -webkit-linear-gradient($fromDirectionString $from, $to);
+	background-image: -moz-linear-gradient($toDirectionString $from, $to);
+	background-image: -o-linear-gradient($toDirectionString $from, $to);
+	background-image: linear-gradient($toDirectionString $from, $to);
+}
+
+/* @include css-gradient(#dfdfdf,#f8f8f8); */
+@mixin css-gradient($from: #dfdfdf, $to: #f8f8f8) {
+	background-color: $to;
+	background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+	background-image: -webkit-linear-gradient(top, $from, $to);
+	background-image: -moz-linear-gradient(top, $from, $to);
+	background-image: -o-linear-gradient(top, $from, $to);
+	background-image: linear-gradient(to bottom, $from, $to);
+}
+
+/*********************
+OTHERS
+*********************/
+@mixin box-sizing($type: border-box) {
+	@each $prefix in $prefixes {
+		#{$prefix}box-sizing: $type;
+	}
+}
+
+@mixin border-radius($radius:5px) {
+	@each $prefix in $prefixes {
+		#{$prefix}border-radius: $radius;
+	}
+}
+
+@mixin placeholder {
+	&::-webkit-input-placeholder	{@content}
+	&:-moz-placeholder				{@content}
+	&::-moz-placeholder			{@content}
+	&:-ms-input-placeholder		{@content}  
+}
+
+@mixin clearfix {
+	&:after {
+		content:"";
+		display:table;
+		clear:both;
+	}
+}
+
+// triangles
+@mixin tri($direction, $girth, $length, $color, $margin:0, $display:inline-block, $float:none, $center:vcenter) {
+	&:after {
+		content:"";
+		width:0;
+		height:0;
+		display:$display;
+		float:$float;
+		margin:$margin;
+		@if $direction == 'left' or $direction =='right' {
+		border-top:$girth solid transparent;
+		border-bottom:$girth solid transparent;
+		} @else {
+			border-left:$girth solid transparent;
+			border-right:$girth solid transparent;
+		}
+		@if $center == 'vcenter' {
+			@include v-center;
+		}
+		@if $direction == 'left' {
+			border-right:$length solid $color;
+		} @else if  $direction == 'right' {
+			border-left:$length solid $color;
+		} @else if  $direction == 'top' {
+			border-bottom:$length solid $color;
+		} @else {
+			border-top:$length solid $color;
+		}
+	}
+}
+@mixin tri-before($direction, $girth, $length, $color, $margin:0, $display:inline-block, $float:none, $center:vcenter) {
+	&:before {
+		content:"";
+		width:0;
+		height:0;
+		display:$display;
+		float:$float;
+		margin:$margin;
+		@if $direction == 'left' or $direction =='right' {
+		border-top:$girth solid transparent;
+		border-bottom:$girth solid transparent;
+		} @else {
+			border-left:$girth solid transparent;
+			border-right:$girth solid transparent;
+		}
+		@if $center == 'vcenter' {
+			@include v-center;
+		}
+		@if $direction == 'left' {
+			border-right:$length solid $color;
+		} @else if  $direction == 'right' {
+			border-left:$length solid $color;
+		} @else if  $direction == 'top' {
+			border-bottom:$length solid $color;
+		} @else {
+			border-top:$length solid $color;
+		}
+	}
+}

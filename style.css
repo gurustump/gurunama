@@ -1,0 +1,17 @@
+/******************************************************************
+Theme Name: Guru Nama
+Theme URI: http://www.themble.com/bones
+Description: This theme has been designed using the Bones theme, with additions by gurustump.
+Author: Matthew Stumphy
+Author URI: http://www.gurustump.com
+Version: 1.7
+Tags: fluid-layout, responsive-layout, accessibility-ready, translation-ready, microformats, rtl-language-support
+
+License: WTFPL
+License URI: http://sam.zoy.org/wtfpl/
+
+******************************************************************/
+
+.sticky {}          /* DO NOT EDIT THIS */
+.gallery-caption {} /* THESE ARE USELESS */
+.bypostauthor {}    /* THEY ARE ONLY TO KEEP THEME CHECK HAPPY */

@@ -1,0 +1,69 @@
+/******************************************************************
+Site Name: 
+Author: 
+
+Stylesheet: Large Monitor Stylesheet
+
+******************************************************************/
+html {
+	&.scrolled {
+		.header {
+			height:$logo-heightScrolled + $logo-top-padding*2;
+		}
+		#logo {
+			a {
+				width:$logo-heightScrolled*4;
+				height:$logo-heightScrolled;
+			}
+		}
+		.main-menu {
+			li {
+				a {
+					height:$logo-heightScrolled;
+					line-height:$logo-heightScrolled;
+				}
+			}
+		}
+	}
+	&.theme-dark, &.theme-deep-rose {
+		body.home {
+			.slider-list {
+				.slider-item {
+					padding:0 $gutter*.25;
+				}
+			}
+		}
+	}
+}
+
+#container {
+	#content {
+		padding-top:$logo-height1240 + $logo-top-padding*2 + $gutter1024;
+	}
+}
+.wrap {
+	max-width:1200px;
+	margin:0 auto;
+}
+.header {
+	height:$logo-height1240 + $logo-top-padding*2;
+}
+
+#logo {
+	margin:0;
+	padding-top:10px;
+	a {
+		width:$logo-height1240*4;
+		height:$logo-height1240; 
+	}
+}
+.main-menu {
+	li {
+		a {
+			height:$logo-height1240;
+			line-height:$logo-height1240;
+			font-size:18px;
+		}
+	}
+}
+

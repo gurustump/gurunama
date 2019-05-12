@@ -1,0 +1,45 @@
+/******************************************************************
+Site Name:
+Author:
+
+Stylesheet: Tablet Portrait
+
+******************************************************************/
+
+/*********************
+LAYOUT & GRID STYLES
+*********************/
+#container {
+	#content {
+		padding-top:$logo-height + $logo-top-padding + $gutter768;
+	}
+}
+.wrap {
+	margin:0 $gutter768;
+}
+
+/*********************
+SIDEBARS & ASIDES
+*********************/
+
+.sidebar {
+	margin-top:2.2em;
+}
+.widgettitle {
+	border-bottom:2px solid #444;
+	margin-bottom:0.75em;
+}
+.widget {
+	padding:0 $gutter*.5;
+	margin:$gutter*2 0;
+	ul {
+		li {
+			margin-bottom:$gutter;
+			ul {
+				margin-top:$gutter*.75;
+				padding-left:$gutter;
+			}
+		}
+	}
+}
+
