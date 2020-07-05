@@ -1,3 +1,19 @@
+			<div class="ov-container">
+				<div class="ov ov-white ov-delete-screenplay OV OV_DELETE_SCREENPLAY">
+					<div class="ov-inner-wrapper">
+						<a href="#" class="close ov-close OV_CLOSE">×</a>
+						<div class="content">
+							<h3>Confirm Screenplay Removal</h3>
+							<p>This will remove your screenplay, <span class="screenplay-title SCREENPLAY_TITLE"></span>, permanently from this website.</p>
+							<div class="actions">
+								<a href="#" class="btn-red CONFIRM_REMOVE_SCREENPLAY">Remove</a>
+								<a href="#" class="btn OV_CLOSE">Cancel</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<footer class="footer" role="contentinfo" itemscope itemtype="http://schema.org/WPFooter">
 				<div id="inner-footer" class="wrap cf">
 					<div class="footer-logo">

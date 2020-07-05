@@ -116,10 +116,12 @@ jQuery(document).ready(function($) {
 	
 	// Check what page we're on
 	if (typeof isHome === "undefined") var isHome = body.hasClass('home');
+	if (typeof isScreenplayEdit === "undefined") var isScreenplayEdit = body.hasClass('page-template-page-edit-screenplay');
 	
 	win.resize(function() {
 		waitForFinalEvent( function() {
 			headerHeight();
+			ovCheckHeight($('.OV.active'));
 			if (isHome) {
 				checkSponsorSliderWidth('resize');
 			}
@@ -144,5 +146,87 @@ jQuery(document).ready(function($) {
 		} else {
 			html.removeClass('scrolled');
 		}
+	}
+	
+	$('.SLIDER').slick({
+		autoplay:true,
+		autoplaySpeed:10000,
+		prevArrow:'<a class="slick-prev"></a>',
+		nextArrow:'<a class="slick-next"></a>',
+	});
+	
+	
+	// Overlay functions
+	function ovOpen(ov) {
+		ov.addClass('active');
+		ovCheckHeight(ov);
+		$('html').addClass('ov-active');
+	}
+	function ovClose(ov) {
+		ov.removeClass('active');
+		if ($('.ov.active').length < 1) {
+			$('html').removeClass('ov-active');
+		}
+	}
+	function ovCheckHeight(ov) {
+		var ovChild = ov.children().first();
+		if (ovChild.outerHeight() > ov.height()) {
+			ov.addClass('too-tall');
+		} else {
+			ov.removeClass('too-tall');
+		}
+	}
+	$('.OV_CLOSE').click(function(e) {
+		e.preventDefault();
+		ovClose($(this).closest('.OV'));
+	});
+	
+	$('.DELETE_SCREENPLAY').click(function(e) {
+		if (!$(this).hasClass('delete-confirmed')) {
+			e.preventDefault();
+			var confirmRemovalOV = $('.OV_DELETE_SCREENPLAY')
+			ovOpen(confirmRemovalOV);
+			confirmRemovalOV.find('.SCREENPLAY_TITLE').html($(this).attr('data_screenplay_title'));
+			confirmRemovalOV.find('.CONFIRM_REMOVE_SCREENPLAY').attr('href',$(this).attr('href'));
+		}
+	});
+	
+	// Screenplay Upload/Edit Page
+	if (isScreenplayEdit) {
+		$('input,textarea').on('change', function(e) {
+			console.log('this happened');
+			$(this).parents('fieldset').find('.error').addClass('resolved');
+		});
+		$('#screenplayFile').on('change', function(e) {
+			var fileInput = $(e.target);
+			var fileLabel = fileInput.prev('label');
+			var fileLabelVal = fileLabel.html();
+			var fileName = '';
+			if (this.files && this.files.length > 1) {
+				fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+			} else if (e.target.value) {
+				console.log(e.target.value);
+				fileName = e.target.value.split('\\').pop();
+			}
+			if (fileName) {
+				fileLabel.html(fileName).addClass('file-selected');
+			} else {
+				fileLabel.html(fileLabelVal).removeClass('file-selected');
+			}
+		});
+		console.log('working up to the tagging part');
+		var taggingOptions = {
+			'no-duplicate':true,
+			'no-backspace':true,
+			'no-spacebar':true,
+			'edit-on-delete':false
+		}
+		$('.TAGGING_JS').tagging(taggingOptions);
+		$('.type-zone').focus(function(e) {
+			$(this).parents('.TAGGING_JS').addClass('active');
+		})
+		$('.type-zone').blur(function(e) {
+			$(this).parents('.TAGGING_JS').removeClass('active');
+		})
 	}
 }); /* end of as page load scripts */

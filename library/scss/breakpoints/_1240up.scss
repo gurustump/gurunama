@@ -8,19 +8,19 @@ Stylesheet: Large Monitor Stylesheet
 html {
 	&.scrolled {
 		.header {
-			height:$logo-heightScrolled + $logo-top-padding*2;
+			height:$header-heightScrolled + $logo-top-padding*2;
 		}
 		#logo {
 			a {
-				width:$logo-heightScrolled*4;
-				height:$logo-heightScrolled;
+				/*width:$header-heightScrolled*4;
+				height:$header-heightScrolled;*/
 			}
 		}
 		.main-menu {
 			li {
 				a {
-					height:$logo-heightScrolled;
-					line-height:$logo-heightScrolled;
+					/*height:$header-heightScrolled;
+					line-height:$header-heightScrolled;*/
 				}
 			}
 		}
@@ -38,7 +38,7 @@ html {
 
 #container {
 	#content {
-		padding-top:$logo-height1240 + $logo-top-padding*2 + $gutter1024;
+		padding-top:$header-height1240 + $logo-top-padding*2 + $gutter1024;
 	}
 }
 .wrap {
@@ -46,22 +46,22 @@ html {
 	margin:0 auto;
 }
 .header {
-	height:$logo-height1240 + $logo-top-padding*2;
+	height:$header-height1240 + $logo-top-padding*2;
 }
 
 #logo {
 	margin:0;
 	padding-top:10px;
 	a {
-		width:$logo-height1240*4;
-		height:$logo-height1240; 
+		/*width:$header-height1240*4;
+		height:$header-height1240; */
 	}
 }
 .main-menu {
 	li {
 		a {
-			height:$logo-height1240;
-			line-height:$logo-height1240;
+			/*height:$header-height1240;
+			line-height:$header-height1240;*/
 			font-size:18px;
 		}
 	}

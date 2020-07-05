@@ -25,51 +25,101 @@ http://www.youtube.com/watch?v=hwdVpKiJzac
 *********************/
 
 %btn {
-  display: inline-block;
-  position: relative;
-  font-family: $sans-serif;
-  text-decoration: none;
-  color: $white;
-  font-size: 0.9em;
-  font-size: 34px;
-  line-height: 34px;
-  font-weight: normal;
-  padding: 0 24px;
-  border-radius: 4px;
-  border: 0;
-  cursor: pointer;
-  @include transition(background-color 0.14s ease-in-out);
+	display:inline-block;
+	position:relative;
+	font-family:$buttonfont;
+	text-decoration:none;
+	color:$white;
+	background-color:$meta-gray;
+	font-size:1em;
+	line-height:2em;
+	font-weight:normal;
+	padding:0 12px;
+	border-radius:1.5em;
+	border:0;
+	cursor:pointer;
+	@include transition(background-color $transition-speed ease-in-out);
 
-  // hovering on the btn
-  &:hover, &:focus {
-    color: $white;
-    text-decoration: none;
-    outline: none;
-  } // end hover
+	// hovering on the btn
+	&:hover {
+		color:$white;
+		background-color:darken($meta-gray,10%);
+		text-decoration:none;
+		outline:none;
+	} // end hover
+	&:visited, &:hover:visited {
+		color:$white;
+	}
 
-  // clicking on the button
-  &:active {
-    top: 1px; // adds a tiny hop to the click
-  } // end active
-
-} // end .button
+} // end %btn
 
 /*
 An example button.
 You can use this example if you want. Just replace all the variables
 and it will create a button dependant on those variables.
 */
-.blue-btn {
-  @extend %btn; // here we load the btn defaults
-  background-color: $blue;
+.btn {
+	@extend %btn;
+}
+.btn-blue {
+	@extend %btn; // here we load the btn defaults
+	background-color:$blue;
 
-  &:hover,
-  &:focus {
-    background-color: darken($blue, 4%);
-  } // end hover
-
-  &:active {
-    background-color: darken($blue, 5%);
-  } // end active
+	&:hover {
+		background-color: darken($blue, 4%);
+	} // end hover
 
 } // end blue button
+
+.btn-red {
+	@extend %btn;
+	background-color:$nama-red;
+	&:hover {
+		background-color:$nama-dark-red;
+	} // end hover
+}
+.btn-upload {
+	position:relative;
+	padding-left:32px;
+	cursor:pointer;
+	&.file-selected {
+		color:$black;
+		background-color:transparent;
+		line-height:1.3em;
+		padding-left:24px;
+		&:before {
+			background-image:url(../images/ic-doc.svg);
+			left:0;
+		}
+	}
+	&:before {
+		content:"";
+		display:inline-block;
+		position:absolute;
+		margin-right:5px;
+		background:url(../images/ic-upload-doc.svg) no-repeat center center;
+		background-size:contain;
+		height:18px;
+		width:15px;
+		left:12px;
+		top:50%;
+		transform:translateY(-50%);
+	}
+}
+@media only screen and (min-width: 768px) {
+	%btn {
+		font-size:1.5em;
+		padding:0 24px;
+	}
+	.btn-upload {
+		padding-left:49px;
+		&.file-selected {
+			padding-left:32px;
+		}
+		&:before {
+			left:24px;
+			width:20px;
+			height:24px;
+		}
+	}
+} // end min-width 768

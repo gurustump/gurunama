@@ -58,15 +58,34 @@
 		<div id="container">
 			<header class="header" role="banner" itemscope itemtype="http://schema.org/WPHeader">
 				<div id="inner-header" class="wrap cf">
-					<p id="logo" class="h1" itemscope itemtype="http://schema.org/Organization"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></p>
-					<?php // bloginfo('description'); ?>
-					<a class="trigger-nav TRIGGER_NAV" href="#">
-						<span class="ic">
-							<span class="bar-1"></span>
-							<span class="bar-2"></span>
-							<span class="bar-3"></span>
-						</span>
-					</a>
+					<div class="upper-header-container">
+						<p id="logo" class="h1" itemscope itemtype="http://schema.org/Organization"><a href="<?php echo home_url(); ?>" rel="nofollow"><?php bloginfo('name'); ?></a></p>
+						<?php // bloginfo('description'); ?>
+						<a class="trigger-nav TRIGGER_NAV" href="#">
+							<span class="ic">
+								<span class="bar-1"></span>
+								<span class="bar-2"></span>
+								<span class="bar-3"></span>
+							</span>
+						</a>
+						<div class="secondary-menu-container">
+							<nav class="secondary-menu" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
+								<?php wp_nav_menu(array(
+										 'container' => false,                           // remove nav container
+										 'container_class' => 'menu cf',                 // class of container (should you choose to use it)
+										 'menu' => __( 'Secondary Menu', 'bonestheme' ),  // nav name
+										 'menu_class' => 'nav cf',               // adding custom nav class
+										 'theme_location' => 'secondary-nav',           // where it's located in the theme
+										 'before' => '',                                 // before the menu
+										   'after' => '',                                  // after the menu
+										   'link_before' => '',                            // before each link
+										   'link_after' => '',                             // after each link
+										   'depth' => 0,                                   // limit the depth of the nav
+										 'fallback_cb' => ''                             // fallback function (if there is one)
+								)); ?>
+							</nav>
+						</div>
+					</div>
 					<div class="main-nav-container MAIN_NAV">
 						<nav class="main-menu" role="navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
 							<?php wp_nav_menu(array(

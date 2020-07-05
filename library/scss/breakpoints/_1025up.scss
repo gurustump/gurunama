@@ -29,7 +29,7 @@ NAVIGATION STYLES
 	position:absolute;
 }
 .main-nav-container {
-	float:right;
+	text-align:center;
 	position:static;
 	background:none;
 	width:auto;
@@ -41,7 +41,7 @@ NAVIGATION STYLES
 	overflow:visible;
 	background:none;
 	li {
-		float: left;
+		display:inline-block;
 		position: relative;
 		&.menu-item.menu-item-has-children {
 			& > a:hover {
@@ -56,15 +56,16 @@ NAVIGATION STYLES
 		a {
 			border-bottom:1px solid transparent;
 			border-color:transparent;
-			@include transition(height $transition-speed, line-height $transition-speed, background-color $transition-speed);
+			@include transition(height $transition-speed, line-height $transition-speed, background-color $transition-speed, color $transition-speed);
 			background:none;
 			font-size:17px;
-			height:$logo-height;
-			line-height:$logo-height;
+			/*height:$header-height;
+			line-height:$header-height;*/
 			padding:0 12px;
 			&:hover {
 				text-decoration:none;
-				background:rgba($black,.03);
+				background:$nama-bright-red;
+				color:$white;
 			}
 		}
 		li a {
@@ -119,4 +120,30 @@ NAVIGATION STYLES
 } /* end .nav */
 .trigger-nav {
 	display:none;
+}
+
+.slider {
+	margin-bottom:$gutter1024;
+	.slick-arrow {
+		width:80px;
+		transition:background-color $transition-speed;
+		&:hover {
+			background-color:rgba($nama-red,.05);
+		}
+	}
+}
+/******************************************
+PAGE SPECIFIC
+******************************************/
+body.home {
+	.home-slider {
+		font-size:2.5em;
+		.slide-man {
+			.slide-content {
+				img {
+					width:200px;
+				}
+			}
+		}
+	}
 }

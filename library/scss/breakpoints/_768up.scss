@@ -11,13 +11,21 @@ LAYOUT & GRID STYLES
 *********************/
 #container {
 	#content {
-		padding-top:$logo-height + $logo-top-padding + $gutter768;
+		padding-top:$header-height + $logo-top-padding + $gutter768;
 	}
 }
 .wrap {
 	margin:0 $gutter768;
 }
-
+#main {
+	// border:1px solid $border-color;
+	padding:$gutter768/2 $gutter768;
+}
+.ov {
+	.ov-inner-wrapper {
+		padding:$gutter768;
+	}
+}
 /*********************
 SIDEBARS & ASIDES
 *********************/
@@ -42,4 +50,36 @@ SIDEBARS & ASIDES
 		}
 	}
 }
+/******************************************
+PAGE SPECIFIC
+******************************************/
+body.home {
+	.home-slider {
+		font-size:2em;
+		.slide-man {
+			font-size:.75em;
+			.slide-content {
+				img {
+					display:block;
+					width:100px;
+					margin:$gutter auto 0;
+				}
+			}
+		}
+	}
+}
 
+/******************************************
+Account Page
+******************************************/
+html.guru {
+	.iump-submit-form {
+		input {
+			font-size:$gutter768;
+			padding:0 $gutter768;
+			&:hover {
+				background-color:$nama-dark-red !important;
+			}
+		}
+	}
+}

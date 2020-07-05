@@ -277,6 +277,64 @@ function createYoutubePlayer($youtubeID) {
 	return '<div class="video-container"><iframe src="https://www.youtube.com/embed/'.$youtubeID.'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
 }
 
+// Front end posting functions
+
+// update post meta function
+function __update_post_meta( $post_id, $field_name, $value = '' )
+{
+	if ( empty( $value ) OR ! $value ) {
+		delete_post_meta( $post_id, $field_name );
+	} elseif ( ! get_post_meta( $post_id, $field_name ) ) {
+		add_post_meta( $post_id, $field_name, $value );
+	} else {
+		update_post_meta( $post_id, $field_name, $value );
+	}
+}
+// upload user file
+function upload_user_file($file = array(), $parent_ID) {
+	require_once(ABSPATH. 'wp-admin/includes/admin.php'); 
+	$file_return = wp_handle_upload($file, array('test_form' => false));
+	if(isset($file_return['error']) || isset($file_return['upload_error_handler'])){
+		return false;
+	} else {
+		$filename = $file_return['url'];
+		$attachment = array(
+			'post_mime_type' => $file_return['type'],
+			'post_content' => '',
+			'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+			'post_status' => 'inherit',
+			'guid' => $file_return['url']
+		);
+		$attachment_id = wp_insert_attachment( $attachment, $filename );
+		require_once(ABSPATH. 'wp-admin/includes/image.php');
+		$attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
+		wp_update_attachment_metadata( $attachment_id, $attachment_data );
+		update_post_meta($parent_ID,'_guru_screenplay_file', $filename);
+	}
+	return $file_return;
+}
+
+// check if current user is admin
+function current_user_is_admin() {
+	 return in_array('administrator',  wp_get_current_user()->roles);
+}
+// check Ultimate Membership Pro subscription level
+function check_subscription_level($subscriptionLevelSlug) {
+	$accessGranted = false;
+	$userID = get_current_user_id();
+	$user_level_IDs = get_user_meta($userID,'ihc_user_levels');
+	if ($user_level_IDs) {
+		foreach($user_level_IDs as $id) {
+			$this_level = ihc_get_level_by_id($id);
+			if ($this_level['name'] == $subscriptionLevelSlug) {
+				$accessGranted = true;
+				return $accessGranted;
+			}
+		}
+	} 
+	return $accessGranted;
+}
+
 // SHORTCODES
 // root path shortcode
 function root_path_shortcode() {
@@ -310,6 +368,50 @@ function button_shortcode($atts) {
 	//return '<a class="btn" href="'.$a['url'].'">'.$a['label'].'</a>';
 }
 add_shortcode('button','button_shortcode');
+
+// Display list of user's screenplays shortcode
+function display_screenplay_list_shortcode($atts) {
+	$a = shortcode_atts( array(
+		'show_all' => 0,
+	), $atts);
+	$edit_page = get_page_by_path('screenplay-edit');
+	$show_all = check_subscription_level('professional') ? true : $a['show_all'];
+	$screenplays = get_posts(array(
+		'author'=> $show_all ? false : get_current_user_ID(),
+		'posts_per_page'=>-1,
+		'post_type'=>'screenplay',
+	));
+	if (count($screenplays) > 0) {
+		$html = '<table class="screenplay-list"><tr>';
+		$html .= '<th>Title</th>';
+		$html .= '<th>Logline</th>';
+		if (current_user_is_admin() || check_subscription_level('screenwriter')) {
+			$html .= '<th>Edit Details</th>';
+			$html .= '<th>Delete</th>';
+		}
+		$html .= '</tr>';
+		foreach($screenplays as $screenplay) {
+			$html .= '<tr>';
+			$html .= '<td><a href="'.get_permalink($screenplay->ID).'">'.$screenplay->post_title.'</a></td>';
+			$html .= '<td>'.get_post_meta($screenplay->ID,'_guru_screenplay_logline',true).'</td>';
+			if (current_user_is_admin() || check_subscription_level('screenwriter')) {
+				$html .= '<td><a class="ic-edit" href="'.add_query_arg('post',$screenplay->ID,get_permalink($edit_page->ID)).'">Edit</a></td>';
+				$html .= '<td><a class="ic-delete DELETE_SCREENPLAY" data_screenplay_title="'.$screenplay->post_title.'" href="'.get_delete_post_link($screenplay->ID).'">Delete</a></td>';
+			}
+			$html .= '</tr>';
+		}
+		$html .= '</table>';
+	} else {
+		$html = "<p>You don't have any screenplays yet.</p>";
+	}
+	if (current_user_is_admin() || check_subscription_level('screenwriter')) {
+		$html .= '<div class="actions"><a href="'.get_permalink($edit_page->ID).'" class="btn-red">Add a Screenplay</a></div>';
+	} else {
+		$html .= '<p><a href="'.get_permalink(get_page_by_path('subscription-plan')).'">Subscribe</a> to upload your own screenplay to nama.media.</p>';
+	}
+	return $html;
+}
+add_shortcode('display_screenplays', 'display_screenplay_list_shortcode');
 
 // filtering gallery shortcode
 add_shortcode('gallery', 'gurustump_gallery_shortcode');

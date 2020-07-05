@@ -10,29 +10,29 @@ on larger screens.
 ******************************************************************/
 #container {
 	#content {
-		padding-top:$logo-height1560 + $logo-top-padding*2 + $gutter1024;
+		padding-top:$header-height1560 + $logo-top-padding*2 + $gutter1024;
 	}
 }
 .wrap {
 	max-width:1500px;
 }
 .header {
-	height:$logo-height1560 + $logo-top-padding*2;
+	height:$header-height1560 + $logo-top-padding*2;
 }
 
 #logo {
 	margin:0;
 	padding-top:10px;
 	a {
-		width:$logo-height1560*4;
-		height:$logo-height1560;
+		/*width:$upper-header-height1560*4;
+		height:$upper-header-height1560;*/
 	}
 }
 .main-menu {
 	li {
 		a {
-			height:$logo-height1560;
-			line-height:$logo-height1560;
+			/*height:$header-height1560;
+			line-height:$header-height1560;*/
 		}
 	}
 }
