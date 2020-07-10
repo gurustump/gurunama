@@ -1,15 +1,6 @@
 <?php
 /*
  Template Name: Edit Screenplay
- *
- * This is your custom page template. You can create as many of these as you need.
- * Simply name is "page-whatever.php" and in add the "Template Name" title at the
- * top, the same way it is here.
- *
- * When you create your page, you can just select the template and viola, you have
- * a custom page template to call your very own. Your mother would be so proud.
- *
- * For more info: http://codex.wordpress.org/Page_Templates
 */
 ?>
 <?php 
@@ -18,6 +9,7 @@ $screenplaySynopsis = $_POST['screenplaySynopsis'];
 $screenplayLogline = $_POST['screenplayLogline'];
 $screenplayFile = $_POST['screenplayFile'];
 $screenplayTags = $_POST['screenplayTag'];
+$queryID = $_POST['editid'];
 $submit = $_POST['submit'];
 
 $hasUploadErrors = false;
@@ -27,17 +19,23 @@ $synopsisError = '';
 $fileError = '';
 $returnMsg = '';
 
+if ($queryID) {
+	$thisPost = get_post($queryID);
+}
+global $user_ID;
 if ($_GET['post']) {
 	$page_title = 'Update Screenplay';
 	$queryID = $_GET['post'];
+	$thisPost = get_post($queryID);
+	$is_valid_screenplay_ID = $thisPost && $thisPost->post_type == 'screenplay';
 	$new_screenplay_ID = $queryID;
 }
 if (isset($submit) && isset( $_POST['post_nonce_field'] ) && wp_verify_nonce( $_POST['post_nonce_field'], 'post_nonce' )) {
-	global $user_ID;
 	if ( ($screenplayTitle || ($queryID && ! empty(trim(get_the_title($queryID)))) )
 	&& ($screenplaySynopsis || ($queryID && ! empty(trim(get_the_content($queryID)))) )
 	&& ($screenplayLogline || ($queryID && ! empty(trim(get_post_meta($queryID,'_guru_screenplay_logline',true)))) )
 	&& ($_FILES['screenplayFile']['size'] != 0 || ($queryID && ! empty(trim(get_post_meta($queryID,'_guru_screenplay_file',true)))) )
+	&& (!$queryID || ($queryID && current_user_owns_post($thisPost)))
 	) { // if there are no validation errors
 		$new_screenplay = array(
 			'post_title' => wp_strip_all_tags($screenplayTitle),
@@ -52,8 +50,10 @@ if (isset($submit) && isset( $_POST['post_nonce_field'] ) && wp_verify_nonce( $_
 			$new_screenplay['ID'] = $queryID;
 			wp_update_post($new_screenplay);
 			$returnMsg = 'Your Screenplay was Updated.';
+			$new_screenplay_ID = $queryID;
 		} else {
-			$new_screenplay_ID = wp_insert_post($new_screenplay);
+			$queryID = $new_screenplay_ID = wp_insert_post($new_screenplay);
+			$thisPost = get_post($queryID);
 			$page_title = 'Update Screenplay';	
 			$returnMsg = 'Your New Screenplay was Successfully Uploaded.';
 		}
@@ -70,6 +70,9 @@ if (isset($submit) && isset( $_POST['post_nonce_field'] ) && wp_verify_nonce( $_
 		
 	} else { // handle errors with upload
 		$hasUploadErrors = true;
+		if ($queryID && !current_user_owns_post($thisPost)) {
+			$pageError = 'You do not have permission to update this screenplay';
+		}
 		if (!$screenplayTitle && empty(trim(get_the_title($queryID))) ) {
 			$titleError = 'Please enter a title for this screenplay';
 		}
@@ -108,9 +111,24 @@ if ($new_screenplay_ID) {
 							<section class="entry-content<?php echo $hasContentSecondary ? ' has-content-secondary':''; ?>" itemprop="articleBody">
 								<div class="content-primary">
 									<?php the_content(); ?>
+									<?php /*
+									<pre>$queryID: 
+									<?php echo $queryID; ?>
+									</pre>
+									<pre>$thisPost: 
+									<?php print_r($thisPost); ?>
+									</pre>
+									<pre>$userID: 
+									<?php echo $user_ID; ?>
+									</pre>
+									<pre>Is the boolean working? 
+									<?php echo ($queryID && current_user_owns_post($thisPost)) ? 'yes':'no'; ?>
+									</pre>
+									*/ ?>
+									<?php if ((!$queryID && can_upload_screenplay()) || ($queryID && current_user_owns_post($thisPost))) { ?>
 									<form action="" enctype="multipart/form-data" id="screenplayUploadForm" method="POST">
 										<?php if ($hasUploadErrors) { ?>
-										<p class="error">There was a problem with your screenplay submission</p>
+										<p class="error">There was a problem with your screenplay submission<?php echo $pageError ? $pageError : ''; ?></p>
 										<?php } ?>
 										<?php if ($returnMsg) { ?>
 										<p class="notice"><?php echo $returnMsg; ?></p>
@@ -159,11 +177,19 @@ if ($new_screenplay_ID) {
 											<input type="file" name="screenplayFile" id="screenplayFile"<?php echo ($queryID && ! empty(trim(get_post_meta($queryID,'_guru_screenplay_file',true)))) ? '' : ' required';?> accept=".pdf"  />
 										</fieldset>
 										<fieldset class="submit-container">
+											<?php if ($queryID && current_user_owns_post(get_post($queryID))) { ?>
+												<input type="hidden" name="editid" id="editid" value="<?php echo $queryID; ?>" />
+											<?php } ?>
 											<input type="hidden" name="submit" id="submit" value="true" />
 											<?php wp_nonce_field( 'post_nonce', 'post_nonce_field' ); ?>
 											<button class="btn-red" type="submit"><?php echo $queryID ? 'Update' : 'Add'; ?> Screenplay</button>
 										</fieldset>
 									</form>
+									<?php } else if ($queryID && !current_user_owns_post($thisPost)) { ?>
+									<p>You do not have permission to edit this content.</p>
+									<?php } else { ?>
+									<p>Want to upload a screenplay? Please <?php echo is_user_logged_in() ? '<a href="'.get_permalink(get_page_by_path('my-account')).'/?ihc_ap_menu=subscription">upgrade</a>' : '<a href="'.get_permalink(get_page_by_path('member-login')).'">login to</a>'; ?> your account.
+									<?php } ?>
 								</div>
 								<?php if ($hasContentSecondary) { ?>
 								<div class="content-secondary">

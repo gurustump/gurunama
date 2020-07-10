@@ -193,6 +193,7 @@ jQuery(document).ready(function($) {
 	
 	// Screenplay Upload/Edit Page
 	if (isScreenplayEdit) {
+		console.log('working');
 		$('input,textarea').on('change', function(e) {
 			console.log('this happened');
 			$(this).parents('fieldset').find('.error').addClass('resolved');

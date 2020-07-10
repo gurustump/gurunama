@@ -70,9 +70,22 @@ body.home {
 }
 
 /******************************************
-Account Page
+Account Page & possibly other Ultimate Membership Pro elements
 ******************************************/
 html.guru {
+	body.nama {
+		.ihc-account-subscr-list thead {
+			border-color:$nama-red;
+			td {
+				&:first-child {
+					padding-left:15px;
+				}
+				&:last-child {
+					text-align:right;
+				}
+			}
+		}
+	}
 	.iump-submit-form {
 		input {
 			font-size:$gutter768;

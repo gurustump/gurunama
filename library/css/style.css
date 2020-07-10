@@ -2433,27 +2433,63 @@ Upload Page
 /**************************************************************
 Account Page & possibly other Ultimate Membership Pro elements
 **************************************************************/
-html.guru body.logged-in .ihc-ap-wrap,
-html.guru body.logged-in .ihc-level-item-title,
-html.guru body.logged-in .ihc-level-item-price {
+html.guru body.nama .ihc-ap-wrap,
+html.guru body.nama .ihc-level-item-title,
+html.guru body.nama .ihc-level-item-price {
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif !important; }
 
-html.guru body.logged-in .ihc-user-page-top-ap-background {
+html.guru body.nama .ihc-user-page-top-ap-background {
   background: #bd0831;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f6013c), color-stop(#bd0831), to(#6a241c));
   background-image: -webkit-linear-gradient(#f6013c, #bd0831, #6a241c);
   background-image: -o-linear-gradient(#f6013c, #bd0831, #6a241c);
   background-image: linear-gradient(#f6013c, #bd0831, #6a241c); }
 
-html.guru body.logged-in .ich_level_wrap .ihc-level-item-wrap {
+html.guru body.nama .ich_level_wrap .ihc-level-item-wrap {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f6013c), color-stop(#bd0831), to(#6a241c));
   background-image: -webkit-linear-gradient(#f6013c, #bd0831, #6a241c);
   background-image: -o-linear-gradient(#f6013c, #bd0831, #6a241c);
   background-image: linear-gradient(#f6013c, #bd0831, #6a241c); }
+  html.guru body.nama .ich_level_wrap .ihc-level-item-wrap:hover {
+    top: 0; }
+  html.guru body.nama .ich_level_wrap .ihc-level-item-wrap .ihc-level-item-link {
+    -webkit-transition: color 375ms, background-color 375ms;
+    -o-transition: color 375ms, background-color 375ms;
+    transition: color 375ms, background-color 375ms; }
+    html.guru body.nama .ich_level_wrap .ihc-level-item-wrap .ihc-level-item-link:hover {
+      color: #fff;
+      background-color: #f6013c; }
 
-html.guru body.logged-in .ihc-level-item-link {
+html.guru body.nama .ihc-level-item-link {
   border-radius: 50px;
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+html.guru body.nama .ihc-user-page-top-ap-wrapper {
+  min-height: 300px;
+  height: auto; }
+  html.guru body.nama .ihc-user-page-top-ap-wrapper .ihc-user-page-top-ap-background {
+    height: 100%; }
+  html.guru body.nama .ihc-user-page-top-ap-wrapper .ihc-top-levels {
+    height: auto; }
+
+html.guru .available-subscriptions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+  html.guru .available-subscriptions .ich_level_wrap {
+    -ms-flex-preferred-size: 33.3%;
+    flex-basis: 33.3%;
+    max-width: 358px;
+    margin: 0; }
+    html.guru .available-subscriptions .ich_level_wrap:empty {
+      display: none; }
+    html.guru .available-subscriptions .ich_level_wrap .ihc-level-item {
+      width: auto;
+      max-width: none; }
+    html.guru .available-subscriptions .ich_level_wrap .ihc-level-item-wrap {
+      margin: 0; }
 
 html.guru .iump-submit-form input {
   border-radius: 1.5em;
@@ -2601,8 +2637,14 @@ PAGE SPECIFIC
         width: 100px;
         margin: 16px auto 0; }
   /******************************************
-Account Page
+Account Page & possibly other Ultimate Membership Pro elements
 ******************************************/
+  html.guru body.nama .ihc-account-subscr-list thead {
+    border-color: #bd0831; }
+    html.guru body.nama .ihc-account-subscr-list thead td:first-child {
+      padding-left: 15px; }
+    html.guru body.nama .ihc-account-subscr-list thead td:last-child {
+      text-align: right; }
   html.guru .iump-submit-form input {
     font-size: 24px;
     padding: 0 24px; }

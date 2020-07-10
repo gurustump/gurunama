@@ -42,7 +42,7 @@
 										} ?>
 									</div>
 									<?php } ?>
-									<?php if (current_user_is_admin()
+									<?php if (user_is_admin()
 									|| check_subscription_level('professional')
 									|| get_the_author_meta('ID') == get_current_user_id() ) { ?>
 									<h3>Screenplay</h3>

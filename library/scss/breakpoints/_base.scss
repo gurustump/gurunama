@@ -1207,7 +1207,7 @@ Upload Page
 Account Page & possibly other Ultimate Membership Pro elements
 **************************************************************/
 html.guru {
-	body.logged-in {
+	body.nama {
 		.ihc-ap-wrap, 
 		.ihc-level-item-title,
 		.ihc-level-item-price {
@@ -1219,10 +1219,49 @@ html.guru {
 		}
 		.ich_level_wrap .ihc-level-item-wrap {
 			background-image:linear-gradient($nama-bright-red,$nama-red,$nama-dark-red);
+			&:hover {
+				top:0;
+			}
+			.ihc-level-item-link {
+				transition:color $transition-speed, background-color $transition-speed;
+				&:hover {
+					color:$white;
+					background-color:$nama-bright-red;
+				}
+			}
 		}
 		.ihc-level-item-link {
 			border-radius:50px;
 			font-family:$buttonfont;
+		}
+		.ihc-user-page-top-ap-wrapper {
+			min-height:300px;
+			height:auto;
+			.ihc-user-page-top-ap-background {
+				height:100%;
+			}
+			.ihc-top-levels {
+				height:auto;
+			}
+		}
+	}
+	.available-subscriptions {
+		display:flex;
+		flex-wrap:wrap;
+		.ich_level_wrap {
+			flex-basis:33.3%;
+			max-width:358px;
+			margin:0;
+			&:empty {
+				display:none;
+			}
+			.ihc-level-item {
+				width:auto;
+				max-width:none;
+			}
+			.ihc-level-item-wrap {
+				margin:0;
+			}
 		}
 	}
 	.iump-submit-form {

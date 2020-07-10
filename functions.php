@@ -314,25 +314,111 @@ function upload_user_file($file = array(), $parent_ID) {
 	return $file_return;
 }
 
+$screenwriter_level_limits = array(
+	'screenwriter_basic' => 1,
+	'screenwriter_plus' => 2,
+	'screenwriter_pro' => 4,
+	'screenwriter_pro_unlimited' => INF,
+);
+
 // check if current user is admin
-function current_user_is_admin() {
-	 return in_array('administrator',  wp_get_current_user()->roles);
+function user_is_admin($userID = false) {
+	$user_roles = $userID ? get_userdata($userID)->roles : wp_get_current_user()->roles;
+	return in_array('administrator', $user_roles);
 }
+function current_user_owns_post($post) {
+	return $post->post_author == get_current_user_ID();
+}
+function get_subscription_level_array($userID = false) {
+	$userID = $userID ? $userID : get_current_user_id();
+	$user_level_ID_list = get_user_meta($userID,'ihc_user_levels');
+	$user_level_IDs = explode(',',$user_level_ID_list[0]);
+	return $user_level_IDs;
+}
+	
 // check Ultimate Membership Pro subscription level
+function get_subscription_level($userID = false) {
+	$user_level_IDs = get_subscription_level_array($userID);
+	if ($user_level_IDs) {
+		$user_level_names = array();
+		foreach($user_level_IDs as $id) {
+			$this_level = ihc_get_level_by_id($id);
+			array_push($user_level_names, $this_level['name']);
+		}
+		return $user_level_names;
+	} else {
+		return false;
+	}
+}
 function check_subscription_level($subscriptionLevelSlug) {
-	$accessGranted = false;
-	$userID = get_current_user_id();
-	$user_level_IDs = get_user_meta($userID,'ihc_user_levels');
+	$user_level_IDs = get_subscription_level_array();
 	if ($user_level_IDs) {
 		foreach($user_level_IDs as $id) {
 			$this_level = ihc_get_level_by_id($id);
 			if ($this_level['name'] == $subscriptionLevelSlug) {
-				$accessGranted = true;
-				return $accessGranted;
+				return true;
 			}
 		}
-	} 
-	return $accessGranted;
+	} else {
+		return false;
+	}
+}
+function is_screenwriter($userID = false) {
+	global $screenwriter_level_limits;
+	$subscription_level = get_subscription_level($userID);
+	if ($subscription_level) {
+		foreach($screenwriter_level_limits as $key => $limit) {
+			if (in_array($key,$subscription_level)) {
+				return $key;
+			}
+		}
+	}
+	return user_is_admin($userID);
+}
+// check if the user's Ultimate Membership Pro subscription has not yet reached the limit for how many screenplays can be uploaded
+function can_upload_screenplay($userID = false) {
+	global $screenwriter_level_limits;
+	$subscription_level = get_subscription_level($userID);
+	if ($subscription_level) {
+		$user_screenplay_upload_limit = 0;
+		foreach($subscription_level as $level) {
+			if ($user_screenplay_upload_limit < $screenwriter_level_limits[$level]) {
+				$user_screenplay_upload_limit = $screenwriter_level_limits[$level];
+			}
+		}
+		$screenplays = get_posts(array(
+			'author'=> get_current_user_ID(),
+			'posts_per_page'=>-1,
+			'post_type'=>'screenplay',
+		));
+		$screenplay_count = count($screenplays);
+		if ($screenplay_count < $user_screenplay_upload_limit) {
+			return true;
+		}
+	}
+	return user_is_admin();
+}
+function assemble_screenplay_table_row($screenplay) {
+	$html = '';
+	if (is_screenwriter($screenplay->post_author)) {
+		$html .= '<tr>';
+		$html .= '<td><a href="'.get_permalink($screenplay->ID).'">'.$screenplay->post_title.'</a></td>';
+		$html .= '<td class="inessential">'.get_userdata($screenplay->post_author)->display_name.'</td>';
+		$html .= '<td class="inessential">'.get_post_meta($screenplay->ID,'_guru_screenplay_logline',true).'</td>';
+		$html .= '<td>'.((is_screenwriter() && current_user_owns_post($screenplay)) ? '<a class="ic-edit" href="'.add_query_arg('post',$screenplay->ID,get_permalink($edit_page->ID)).'">Edit</a>' : '').'</td>';
+		$html .= '<td>'.((is_screenwriter() && current_user_owns_post($screenplay)) ? '<a class="ic-delete DELETE_SCREENPLAY" data_screenplay_title="'.$screenplay->post_title.'" href="'.get_delete_post_link($screenplay->ID).'">Delete</a>' : '').'</td>';
+		$html .= '</tr>';
+	}
+	return $html;
+}
+// returns an array of the IDs of the subscriptions to which the current user is not subscribed
+function get_available_subscriptions() {
+	$levels = get_option('ihc_levels');
+	$userSubscriptions = get_subscription_level_array();
+	foreach($userSubscriptions as $subscription) {
+		unset($levels[$subscription]);
+	}
+	return $levels;
 }
 
 // SHORTCODES
@@ -384,34 +470,57 @@ function display_screenplay_list_shortcode($atts) {
 	if (count($screenplays) > 0) {
 		$html = '<table class="screenplay-list"><tr>';
 		$html .= '<th>Title</th>';
-		$html .= '<th>Logline</th>';
-		if (current_user_is_admin() || check_subscription_level('screenwriter')) {
+		$html .= '<th class="inessential">Author</th>';
+		$html .= '<th class="inessential">Logline</th>';
+		if (is_screenwriter()) {
 			$html .= '<th>Edit Details</th>';
 			$html .= '<th>Delete</th>';
 		}
 		$html .= '</tr>';
 		foreach($screenplays as $screenplay) {
-			$html .= '<tr>';
-			$html .= '<td><a href="'.get_permalink($screenplay->ID).'">'.$screenplay->post_title.'</a></td>';
-			$html .= '<td>'.get_post_meta($screenplay->ID,'_guru_screenplay_logline',true).'</td>';
-			if (current_user_is_admin() || check_subscription_level('screenwriter')) {
-				$html .= '<td><a class="ic-edit" href="'.add_query_arg('post',$screenplay->ID,get_permalink($edit_page->ID)).'">Edit</a></td>';
-				$html .= '<td><a class="ic-delete DELETE_SCREENPLAY" data_screenplay_title="'.$screenplay->post_title.'" href="'.get_delete_post_link($screenplay->ID).'">Delete</a></td>';
+			if (current_user_owns_post($screenplay)) {
+				$html .= assemble_screenplay_table_row($screenplay);
 			}
-			$html .= '</tr>';
+		}
+		foreach($screenplays as $screenplay) {
+			if (!current_user_owns_post($screenplay)) {
+				$html .= assemble_screenplay_table_row($screenplay);
+			}
 		}
 		$html .= '</table>';
 	} else {
 		$html = "<p>You don't have any screenplays yet.</p>";
 	}
-	if (current_user_is_admin() || check_subscription_level('screenwriter')) {
+	if (can_upload_screenplay()) {
 		$html .= '<div class="actions"><a href="'.get_permalink($edit_page->ID).'" class="btn-red">Add a Screenplay</a></div>';
 	} else {
-		$html .= '<p><a href="'.get_permalink(get_page_by_path('subscription-plan')).'">Subscribe</a> to upload your own screenplay to nama.media.</p>';
+		$html .= '<p><a href="'.get_permalink(get_page_by_path('my-account')).'/?ihc_ap_menu=subscription">Upgrade</a> to upload another screenplay to nama.media.</p>';
 	}
 	return $html;
 }
 add_shortcode('display_screenplays', 'display_screenplay_list_shortcode');
+
+// Display available subscriptions (subscriptions other than the ones the user already has)
+function display_available_subscriptions() {
+	$levels = get_option('ihc_levels');
+	$userSubscriptions = get_subscription_level_array();
+	foreach($userSubscriptions as $subscription) {
+		unset($levels[$subscription]);
+	}
+	$html = '';
+	if (count($levels) > 0) {
+		$html .= '<h2>Available Upgrades</h2>';
+		$html .= '<div class="available-subscriptions">';
+		foreach($levels as $key => $level) {
+			$html .= do_shortcode('[ihc-select-level id='.$key.']');
+		}
+		$html .= '</div>';
+	}
+	//return print_r($userSubscriptions,true);
+	//return print_r($levels,true);
+	return $html;
+}
+add_shortcode('available_subscriptions','display_available_subscriptions');
 
 // filtering gallery shortcode
 add_shortcode('gallery', 'gurustump_gallery_shortcode');
