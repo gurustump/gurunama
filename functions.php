@@ -399,6 +399,7 @@ function can_upload_screenplay($userID = false) {
 	return user_is_admin();
 }
 function assemble_screenplay_table_row($screenplay) {
+	$edit_page = get_page_by_path('screenplay-edit');
 	$html = '';
 	if (is_screenwriter($screenplay->post_author)) {
 		$html .= '<tr>';
