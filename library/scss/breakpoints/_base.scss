@@ -656,6 +656,12 @@ POSTS & CONTENT STYLES
 		padding:$gutter*2;
 		margin:0 0 $gutter;
 	}
+	.wp-caption {
+		border:1px solid $border-color;
+		padding:8px;
+		background:transparent;
+		margin-bottom:1.5em;
+	}
 } /* end .entry-content */
 .info-box {
 	border-top:1px solid $border-color;
@@ -1248,6 +1254,7 @@ html.guru {
 	.available-subscriptions {
 		display:flex;
 		flex-wrap:wrap;
+		clear:both;
 		.ich_level_wrap {
 			flex-basis:33.3%;
 			max-width:358px;
