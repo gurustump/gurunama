@@ -317,10 +317,10 @@ function upload_user_file($file = array(), $parent_ID) {
 }
 
 $screenwriter_level_limits = array(
-	'screenwriter_basic' => 1,
-	'screenwriter_plus' => 2,
-	'screenwriter_pro' => 4,
-	'screenwriter_pro_unlimited' => INF,
+	'writer_basic' => 1,
+	'writer_plus' => 2,
+	'writer_pro' => 4,
+	'writer_pro_unlimited' => INF,
 );
 
 // check if current user is admin
@@ -401,7 +401,7 @@ function can_upload_screenplay($userID = false) {
 	return user_is_admin();
 }
 function assemble_screenplay_table_row($screenplay) {
-	$edit_page = get_page_by_path('screenplay-edit');
+	$edit_page = get_page_by_path('script-edit');
 	$html = '';
 	if (is_screenwriter($screenplay->post_author)) {
 		$html .= '<tr>';
@@ -463,7 +463,7 @@ function display_screenplay_list_shortcode($atts) {
 	$a = shortcode_atts( array(
 		'show_all' => 0,
 	), $atts);
-	$edit_page = get_page_by_path('screenplay-edit');
+	$edit_page = get_page_by_path('script-edit');
 	$show_all = check_subscription_level('professional') ? true : $a['show_all'];
 	$screenplays = get_posts(array(
 		'author'=> $show_all ? false : get_current_user_ID(),
@@ -492,16 +492,16 @@ function display_screenplay_list_shortcode($atts) {
 		}
 		$html .= '</table>';
 	} else {
-		$html = "<p>You don't have any screenplays yet.</p>";
+		$html = "<p>You don't have any scripts yet.</p>";
 	}
 	if (can_upload_screenplay()) {
-		$html .= '<div class="actions"><a href="'.get_permalink($edit_page->ID).'" class="btn-red">Add a Screenplay</a></div>';
+		$html .= '<div class="actions"><a href="'.get_permalink($edit_page->ID).'" class="btn-red">Add a Script</a></div>';
 	} else {
-		$html .= '<p><a href="'.get_permalink(get_page_by_path('my-account')).'/?ihc_ap_menu=subscription">Upgrade</a> to upload another screenplay to nama.media.</p>';
+		$html .= '<p><a href="'.get_permalink(get_page_by_path('my-account')).'/?ihc_ap_menu=subscription">Upgrade</a> to upload another script to nama.media.</p>';
 	}
 	return $html;
 }
-add_shortcode('display_screenplays', 'display_screenplay_list_shortcode');
+add_shortcode('display_scripts', 'display_screenplay_list_shortcode');
 
 // Display available subscriptions (subscriptions other than the ones the user already has)
 function display_available_subscriptions() {

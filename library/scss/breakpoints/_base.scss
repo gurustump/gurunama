@@ -251,7 +251,7 @@ h3, .h3 {
 }
 
 h4, .h4 {
-	font-size: 1.1em;
+	font-size: 1em;
 	font-weight: 700;
 }
 
@@ -259,7 +259,6 @@ h5, .h5 {
 	font-size: 0.846em;
 	line-height: 2.09em;
 	text-transform: uppercase;
-	letter-spacing: 2px;
 }
 p, ul, ol {
 	margin-top:0;
@@ -1343,6 +1342,33 @@ body.single-screenplay {
 		}
 		.pdfemb-viewer {
 			margin:0 -1*$gutter;
+		}
+	}
+	.about-writer {
+		background:$light-gray;
+		display:flex;
+		flex-wrap:wrap;
+		h4 {
+			margin-bottom:$gutter*.5;
+		}
+		
+		h5 {
+			margin-bottom:0;
+			line-height:inherit;
+		}
+		& > div {
+			margin-bottom:$gutter;
+			border-bottom:1px solid $border-color;
+			padding-bottom:$gutter;
+			flex-basis:100%;
+			&:last-child {
+				border-bottom:0;
+				margin-bottom:0;
+				padding-bottom:0;
+			}
+		}
+		.secondary-divider {
+			margin-bottom:$gutter*.75;
 		}
 	}
 }

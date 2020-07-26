@@ -68,6 +68,27 @@ body.home {
 		}
 	}
 }
+/******************************************
+Single Screenplay Page
+******************************************/
+body.single-screenplay {
+	.about-writer {
+		& > div {
+			flex-basis:50%;
+			&.union {
+				margin-bottom:0;
+				padding-bottom:0;
+				border-bottom:0;
+			}
+			&:nth-child(odd) {
+				padding-right:$gutter*.5;
+			}
+			&:nth-child(even) {
+				padding-left:$gutter*.5;
+			}
+		}
+	}
+}
 
 /******************************************
 Account Page & possibly other Ultimate Membership Pro elements

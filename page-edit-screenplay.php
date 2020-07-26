@@ -1,6 +1,6 @@
 <?php
 /*
- Template Name: Edit Screenplay
+ Template Name: Edit Script
 */
 ?>
 <?php 
@@ -8,6 +8,10 @@ $screenplayTitle = $_POST['screenplayTitle'];
 $screenplaySynopsis = $_POST['screenplaySynopsis'];
 $screenplayLogline = $_POST['screenplayLogline'];
 $screenplayFile = $_POST['screenplayFile'];
+$screenplayType = $_POST['screenplayType'];
+$screenplayTribalAffiliation = $_POST['screenplayTribalAffiliation'];
+$screenplayTribe = $_POST['screenplayTribe'];
+$screenplayUnion = $_POST['screenplayUnion'];
 $screenplayTags = $_POST['screenplayTag'];
 $queryID = $_POST['editid'];
 $submit = $_POST['submit'];
@@ -24,7 +28,7 @@ if ($queryID) {
 }
 global $user_ID;
 if ($_GET['post']) {
-	$page_title = 'Update Screenplay';
+	$page_title = 'Update Script';
 	$queryID = $_GET['post'];
 	$thisPost = get_post($queryID);
 	$is_valid_screenplay_ID = $thisPost && $thisPost->post_type == 'screenplay';
@@ -49,15 +53,19 @@ if (isset($submit) && isset( $_POST['post_nonce_field'] ) && wp_verify_nonce( $_
 		if ($queryID) {
 			$new_screenplay['ID'] = $queryID;
 			wp_update_post($new_screenplay);
-			$returnMsg = 'Your Screenplay was Updated.';
+			$returnMsg = 'Your Script was Updated.';
 			$new_screenplay_ID = $queryID;
 		} else {
 			$queryID = $new_screenplay_ID = wp_insert_post($new_screenplay);
 			$thisPost = get_post($queryID);
-			$page_title = 'Update Screenplay';	
-			$returnMsg = 'Your New Screenplay was Successfully Uploaded.';
+			$page_title = 'Update Script';	
+			$returnMsg = 'Your New Script was Successfully Uploaded.';
 		}
 		__update_post_meta($new_screenplay_ID, '_guru_screenplay_logline', $screenplayLogline);
+		__update_post_meta($new_screenplay_ID, '_guru_screenplay_script_type', $screenplayType);
+		__update_post_meta($new_screenplay_ID, '_guru_screenplay_tribal_affiliation', $screenplayTribalAffiliation);
+		__update_post_meta($new_screenplay_ID, '_guru_screenplay_tribe', $screenplayTribe);
+		__update_post_meta($new_screenplay_ID, '_guru_screenplay_union', $screenplayUnion);
 		
 		if (!empty($screenplayTags)) {
 			wp_set_post_terms($new_screenplay_ID,$screenplayTags,'screenplay_tag');
@@ -87,7 +95,7 @@ if (isset($submit) && isset( $_POST['post_nonce_field'] ) && wp_verify_nonce( $_
 		}
 	}
 } else if (!$_GET['post']) {
-	$page_title = 'Upload Screenplay';
+	$page_title = 'Upload Script';
 }
 if ($new_screenplay_ID) {
 	$currentScreenplayArray = array(
@@ -95,6 +103,9 @@ if ($new_screenplay_ID) {
 		'logline' => get_post_meta($new_screenplay_ID,'_guru_screenplay_logline',true),
 		'synopsis' => get_the_content(false,false,$new_screenplay_ID),
 		'file' => get_post_meta($new_screenplay_ID,'_guru_screenplay_file',true),
+		'script_type' => get_post_meta($new_screenplay_ID,'_guru_screenplay_script_type',true),
+		'tribal_affiliation' => get_post_meta($new_screenplay_ID,'_guru_screenplay_tribal_affiliation',true),
+		'union' => get_post_meta($new_screenplay_ID,'_guru_screenplay_union',true),
 	);
 }
 ?>
@@ -134,7 +145,7 @@ if ($new_screenplay_ID) {
 										<p class="notice"><?php echo $returnMsg; ?></p>
 										<?php } ?>
 										<fieldset>
-											<label for="screenplayTitle" class="required">Screenplay Title</label>
+											<label for="screenplayTitle" class="required">Script Title</label>
 											<?php if ($hasUploadErrors && $titleError) { 
 												echo '<div class="error">'.$titleError.'</div>';
 											} ?>
@@ -155,6 +166,14 @@ if ($new_screenplay_ID) {
 											<textarea name="screenplaySynopsis" id="screenplaySynopsis" required><?php echo $currentScreenplayArray['synopsis']; ?></textarea>
 										</fieldset>
 										<fieldset>
+											<label for="screenplayType" class="required">Type</label>
+											<select name="screenplayType" id="screenplayType" required>
+												<?php foreach(script_type_options() as $key => $option) {
+													echo '<option value="'.$key.'"'.($key == $currentScreenplayArray['script_type'] ? ' selected':'').'>'.$option.'</option>';
+												} ?>
+											</select>
+										</fieldset>
+										<fieldset>
 											<label>Genre</label>
 											<div class="field tagging-js TAGGING_JS" data-tags-input-name="screenplayTag"><?php
 												$tags = get_the_terms($queryID,'screenplay_tag');
@@ -173,7 +192,7 @@ if ($new_screenplay_ID) {
 											<?php if ($hasUploadErrors && $fileError) { 
 												echo '<p class="error">'.$fileError.'</p>';
 											} ?>
-											<label class="btn-blue btn-upload<?php echo ($queryID && ! empty(trim(get_post_meta($queryID,'_guru_screenplay_file',true))) ) ? ' file-selected' : '';?>" for="screenplayFile"><?php echo ($queryID && $currentScreenplayArray['file']) ? basename($currentScreenplayArray['file']) : 'Select a Screenplay to Upload';?></label>
+											<label class="btn-blue btn-upload<?php echo ($queryID && ! empty(trim(get_post_meta($queryID,'_guru_screenplay_file',true))) ) ? ' file-selected' : '';?>" for="screenplayFile"><?php echo ($queryID && $currentScreenplayArray['file']) ? basename($currentScreenplayArray['file']) : 'Select a Script to Upload';?></label>
 											<input type="file" name="screenplayFile" id="screenplayFile"<?php echo ($queryID && ! empty(trim(get_post_meta($queryID,'_guru_screenplay_file',true)))) ? '' : ' required';?> accept=".pdf"  />
 										</fieldset>
 										<fieldset class="submit-container">
@@ -182,7 +201,7 @@ if ($new_screenplay_ID) {
 											<?php } ?>
 											<input type="hidden" name="submit" id="submit" value="true" />
 											<?php wp_nonce_field( 'post_nonce', 'post_nonce_field' ); ?>
-											<button class="btn-red" type="submit"><?php echo $queryID ? 'Update' : 'Add'; ?> Screenplay</button>
+											<button class="btn-red" type="submit"><?php echo $queryID ? 'Update' : 'Add'; ?> Script</button>
 										</fieldset>
 									</form>
 									<?php } else if ($queryID && !current_user_owns_post($thisPost)) { ?>

@@ -74,7 +74,6 @@ NAVIGATION STYLES
 		}
 		ul.sub-menu,
 		ul.children {
-			margin-top:-30px;
 			border-top:0;
 			position: absolute;
 			opacity: 0;
@@ -82,13 +81,18 @@ NAVIGATION STYLES
 			height:0;
 			overflow:hidden;
 			z-index: 8999;
+			margin:0;
 			li {
+				display:block;
 				a {
 					padding-left:10px;
 					border-right:0;
 					display:block;
 					background:rgba($white,.1);
 					border-top:1px solid $border-color;
+					&:hover {
+						background:$nama-bright-red;
+					}
 				}
 				ul {
 					top:0;
@@ -100,6 +104,9 @@ NAVIGATION STYLES
 			li.current_page_item,
 			li.current_page_ancestor {
 				a {}
+			}
+			&:hover {
+				opacity:1;
 			}
 		}
 		/* showing sub-menus */

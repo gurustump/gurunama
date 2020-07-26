@@ -1487,14 +1487,13 @@ h3, .h3 {
   font-size: 1.125em; }
 
 h4, .h4 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 700; }
 
 h5, .h5 {
   font-size: 0.846em;
   line-height: 2.09em;
-  text-transform: uppercase;
-  letter-spacing: 2px; }
+  text-transform: uppercase; }
 
 p, ul, ol {
   margin-top: 0; }
@@ -2560,6 +2559,31 @@ body.single-screenplay .content-primary h3, body.single-screenplay .content-prim
 body.single-screenplay .content-primary .pdfemb-viewer {
   margin: 0 -16px; }
 
+body.single-screenplay .about-writer {
+  background: #f8f9fa;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+  body.single-screenplay .about-writer h4 {
+    margin-bottom: 8px; }
+  body.single-screenplay .about-writer h5 {
+    margin-bottom: 0;
+    line-height: inherit; }
+  body.single-screenplay .about-writer > div {
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 16px;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%; }
+    body.single-screenplay .about-writer > div:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0; }
+  body.single-screenplay .about-writer .secondary-divider {
+    margin-bottom: 12px; }
+
 /*********************
 LARGER MOBILE DEVICES
 This is for devices like the Galaxy Note or something that's
@@ -2643,6 +2667,20 @@ PAGE SPECIFIC
         display: block;
         width: 100px;
         margin: 16px auto 0; }
+  /******************************************
+Single Screenplay Page
+******************************************/
+  body.single-screenplay .about-writer > div {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%; }
+    body.single-screenplay .about-writer > div.union {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: 0; }
+    body.single-screenplay .about-writer > div:nth-child(odd) {
+      padding-right: 8px; }
+    body.single-screenplay .about-writer > div:nth-child(even) {
+      padding-left: 8px; }
   /******************************************
 Account Page & possibly other Ultimate Membership Pro elements
 ******************************************/
@@ -2775,7 +2813,6 @@ NAVIGATION STYLES
         line-height: 55px; }
       .main-menu li ul.sub-menu,
       .main-menu li ul.children {
-        margin-top: -30px;
         border-top: 0;
         position: absolute;
         opacity: 0;
@@ -2787,18 +2824,28 @@ NAVIGATION STYLES
         height: 0;
         overflow: hidden;
         z-index: 8999;
+        margin: 0;
         /* highlight sub-menu current page */ }
-        .main-menu li ul.sub-menu li a,
-        .main-menu li ul.children li a {
-          padding-left: 10px;
-          border-right: 0;
-          display: block;
-          background: rgba(255, 255, 255, 0.1);
-          border-top: 1px solid rgba(0, 0, 0, 0.1); }
-        .main-menu li ul.sub-menu li ul,
-        .main-menu li ul.children li ul {
-          top: 0;
-          left: 100%; }
+        .main-menu li ul.sub-menu li,
+        .main-menu li ul.children li {
+          display: block; }
+          .main-menu li ul.sub-menu li a,
+          .main-menu li ul.children li a {
+            padding-left: 10px;
+            border-right: 0;
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1); }
+            .main-menu li ul.sub-menu li a:hover,
+            .main-menu li ul.children li a:hover {
+              background: #f6013c; }
+          .main-menu li ul.sub-menu li ul,
+          .main-menu li ul.children li ul {
+            top: 0;
+            left: 100%; }
+        .main-menu li ul.sub-menu:hover,
+        .main-menu li ul.children:hover {
+          opacity: 1; }
       .main-menu li:hover > ul {
         top: auto;
         opacity: 1;
@@ -2903,7 +2950,25 @@ on larger screens.
       margin-right: 1%;
       width: 19%;
       padding-bottom: 19%;
-      margin-bottom: 1%; } }
+      margin-bottom: 1%; }
+  /******************************************
+Single Screenplay Page
+******************************************/
+  body.single-screenplay .about-writer > div {
+    -ms-flex-preferred-size: 20%;
+    flex-basis: 20%;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+    padding-right: 8px;
+    padding-left: 8px; }
+    body.single-screenplay .about-writer > div:first-child {
+      padding-left: 0; }
+    body.single-screenplay .about-writer > div:last-child {
+      padding-right: 0; }
+    body.single-screenplay .about-writer > div.bio {
+      -ms-flex-preferred-size: 40%;
+      flex-basis: 40%; } }
 
 /*********************
 RETINA (2x RESOLUTION DEVICES)

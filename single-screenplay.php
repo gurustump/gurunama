@@ -28,6 +28,33 @@
 										<h1 class="single-title custom-post-type-title"><?php the_title(); ?></h1>
 										<h2 class="author">by <?php the_author_meta('display_name'); ?></h2>
 									</header>
+									<?php 
+									$authorID = get_the_author_meta('ID');
+									$authorMeta = array();
+									if (get_user_meta($authorID,'description',true)) {
+										$authorMeta['bio'] = get_user_meta($authorID,'description',true);
+									}
+									if (get_user_meta($authorID,'tribe',true)) {
+										$authorMeta['tribe'] = get_user_meta($authorID,'tribe',true);
+									}
+									if (get_user_meta($authorID,'tribal_affiliation',true)) {
+										$authorMeta['tribal_affiliation'] = get_user_meta($authorID,'tribal_affiliation',true);
+									}
+									if (get_user_meta($authorID,'union',true)) {
+										$authorMeta['union'] = get_user_meta($authorID,'union',true);
+									}
+									if (get_user_meta($authorID,'literary_rep_name',true)) {
+										$authorMeta['literary_rep_name'] = get_user_meta($authorID,'literary_rep_name',true);
+									}
+									if (get_user_meta($authorID,'literary_rep_email',true)) {
+										$authorMeta['literary_rep_email'] = get_user_meta($authorID,'literary_rep_email',true);
+									}
+									if (get_user_meta($authorID,'literary_rep_phone',true)) {
+										$authorMeta['literary_rep_phone'] = get_user_meta($authorID,'literary_rep_phone',true);
+									}
+									if (get_user_meta($authorID,'literary_rep_website',true)) {
+										$authorMeta['literary_rep_website'] = get_user_meta($authorID,'literary_rep_website',true);
+									} ?>
 									<h3>Logline</h3>
 									<div class="info-box"><?php echo get_post_meta(get_the_ID(),'_guru_screenplay_logline',true); ?></div>
 									<h3>Synopsis</h3>
@@ -42,10 +69,73 @@
 										} ?>
 									</div>
 									<?php } ?>
+									<?php if (!empty($authorMeta)) { ?>
+										<h3>About this Writer</h3>
+										<div class="about-writer info-box">
+											<?php if ($authorMeta['bio']) { ?>
+											<div class="bio">
+												<h4>Biographical Sketch</h4>
+												<div><?php echo $authorMeta['bio']; ?></div>
+											</div>
+											<?php } ?>
+											<?php if ($authorMeta['tribe'] || $authorMeta['tribal_affiliation']) { ?>
+											<div class="tribal">
+												<h4>Tribal Affiliation</h4>
+												<?php if ($authorMeta['tribe']) { ?>
+												<div class="secondary-divider">
+													<h5>Tribe</h5>
+													<div><?php echo $authorMeta['tribe']; ?></div>
+												</div>
+												<?php } ?>
+												<?php if ($authorMeta['tribal_affiliation']) { ?>
+												<div class="secondary-divider">
+													<h5>Tribal Affiliation Type</h5>
+													<div><?php echo $authorMeta['tribal_affiliation']; ?></div>
+												</div>
+												<?php } ?>
+											</div>
+											<?php } ?>
+											<?php if ($authorMeta['union']) { ?>
+											<div class="union">
+												<h4>Union Affiliation</h4>
+												<div><?php echo $authorMeta['union']; ?></div>
+											</div>
+											<?php } ?>
+											<?php if ($authorMeta['literary_rep_name'] || $authorMeta['literary_rep_email'] || $authorMeta['literary_rep_phone'] || $authorMeta['literary_rep_website']) { ?>
+											<div class="representation">
+												<h4>Literary Representation</h4>
+												<?php if ($authorMeta['literary_rep_name']) { ?>
+												<div class="secondary-divider">
+													<h5>Literary Rep</h5>
+													<div><?php echo $authorMeta['literary_rep_name']; ?></div>
+												</div>
+												<?php } ?>
+												<?php if ($authorMeta['literary_rep_email']) { ?>
+												<div class="secondary-divider">
+													<h5>Email</h5>
+													<div><?php echo $authorMeta['literary_rep_email']; ?></div>
+												</div>
+												<?php } ?>
+												<?php if ($authorMeta['literary_rep_phone']) { ?>
+												<div class="secondary-divider">
+													<h5>Phone</h5>
+													<div><?php echo $authorMeta['literary_rep_phone']; ?></div>
+												</div>
+												<?php } ?>
+												<?php if ($authorMeta['literary_rep_website']) { ?>
+												<div class="secondary-divider">
+													<h5>Website</h5>
+													<div><?php echo $authorMeta['literary_rep_website']; ?></div>
+												</div>
+												<?php } ?>
+											</div>
+											<?php } ?>
+										</div>
+									<?php } ?>
 									<?php if (user_is_admin()
 									|| check_subscription_level('professional')
 									|| get_the_author_meta('ID') == get_current_user_id() ) { ?>
-									<h3>Screenplay</h3>
+									<h3>Script</h3>
 									<div class="info-box">
 										<?php echo do_shortcode('[pdf-embedder url="'.get_post_meta(get_the_ID(),'_guru_screenplay_file',true).'"]'); ?>
 									</div>

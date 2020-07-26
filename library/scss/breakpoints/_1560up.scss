@@ -54,3 +54,27 @@ on larger screens.
 		margin-bottom:1%;
 	}
 }
+/******************************************
+Single Screenplay Page
+******************************************/
+body.single-screenplay {
+	.about-writer {
+		& > div {
+			flex-basis:20%;
+			margin-bottom:0;
+			padding-bottom:0;
+			border-bottom:0;
+			padding-right:$gutter*.5;
+			padding-left:$gutter*.5;
+			&:first-child {
+				padding-left:0;
+			}
+			&:last-child {
+				padding-right:0;
+			}
+			&.bio {
+				flex-basis:40%;
+			}
+		}
+	}
+}
