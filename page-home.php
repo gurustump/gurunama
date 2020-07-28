@@ -13,25 +13,23 @@
 							<?php $hasContentSecondary = is_active_sidebar('sidebar1'); ?>
 							<section class="entry-content<?php echo $hasContentSecondary ? ' has-content-secondary':''; ?>" itemprop="articleBody">
 								<div class="home-slider page-slider slider SLIDER">
-									<div class="slide slide-smiling-man">
-										<img src="<?php echo get_template_directory_uri(); ?>/library/images/home-slider/bw-smiling-man.jpg">
-										<div class="slide-content">
-											<p>Protecting the Authentic Voice of Native Americans in Film, TV and New Media</p>
-										</div>
+									<?php $slides = get_post_meta(get_the_ID(),'_guru_page_home_slider',true);
+									foreach($slides as $slide) { ?>
+									<div class="slide">
+										<?php $link_array = $slide['url'];
+										$imgSrcMeta = wp_get_attachment_image_src($slide['image_id'], 'extra-large');
+										/*echo '<pre>';
+										print_r($slide);
+										echo '</pre>';*/
+										$imgSrc = $imgSrcMeta[0];
+										echo $link_array ? '<a href="'.$link_array['url'].'"'.($link_array['target'] ? ' target="_blank"':'').'>' : ''; ?>
+											<img class="bg" src="<?php echo $imgSrc; ?>">
+											<span class="slide-content"<?php echo ($slide['text_width'] || $slide['text_left'] || $slide['text_size']) ? ' style="'.($slide['text_width'] ? 'width:'.$slide['text_width'].'%;':'').($slide['text_left'] ? 'left:'.$slide['text_left'].'%;':'').($slide['text_size'] ? 'font-size:.'.$slide['text_size'].'em;':'').'"':''; ?>>
+												<?php echo wpautop($slide['text']); ?>
+											</span>
+										<?php echo $link_array ? '</a>' : ''; ?>
 									</div>
-									<div class="slide slide-woman">
-										<img src="<?php echo get_template_directory_uri(); ?>/library/images/home-slider/bw-woman.jpg">
-										<div class="slide-content">
-											<p>Providing genuine Native American talent to the entertainment industry</p>
-										</div>
-									</div>
-									<div class="slide slide-man">
-										<img src="<?php echo get_template_directory_uri(); ?>/library/images/home-slider/bw-ian.jpg">
-										<div class="slide-content">
-											<p>Working with the Motion Picture Association to offer Native American representation to Studios and Networks</p>
-											<img src="<?php echo get_template_directory_uri(); ?>/library/images/home-slider/mpa-logo.png" alt="MPA">
-										</div>
-									</div>
+									<?php } ?>
 								</div>
 								<div class="content-primary">
 								<?php the_content(); ?>

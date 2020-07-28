@@ -122,15 +122,14 @@ jQuery(document).ready(function($) {
 		waitForFinalEvent( function() {
 			headerHeight();
 			ovCheckHeight($('.OV.active'));
-			if (isHome) {
-				checkSponsorSliderWidth('resize');
-			}
 		}, timeToWaitForLast, 'resizeWindow');
 	});
 	
 	win.scroll(function() {
 		headerHeight();
 	});
+	
+	headerHeight();
 	
 	// Control mobile main nav
 	$('.TRIGGER_NAV').click(function(e) {

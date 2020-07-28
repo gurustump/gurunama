@@ -56,14 +56,9 @@ PAGE SPECIFIC
 body.home {
 	.home-slider {
 		font-size:2em;
-		.slide-man {
-			font-size:.75em;
-			.slide-content {
-				img {
-					display:block;
-					width:100px;
-					margin:$gutter auto 0;
-				}
+		.slide-content {
+			img {
+				display:block;
 			}
 		}
 	}

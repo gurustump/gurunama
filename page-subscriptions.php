@@ -26,6 +26,12 @@
 										echo do_shortcode('[ihc-select-level id='.$key.']');
 									} ?>
 									</div>
+									<?php $secContent = get_post_meta(get_the_ID(),'_guru_page_secondary',true);
+									if ($secContent) { ?>
+									<div class="secondary-content">
+										<?php echo apply_filters('the_content',$secContent); ?>
+									</div>
+									<?php } ?>
 								</div>
 								<?php if ($hasContentSecondary) { ?>
 								<div class="content-secondary">

@@ -455,7 +455,7 @@ NAVIGATION STYLES
 	}
 	.slide {
 		position:relative;
-		img {
+		img.bg {
 			display:block;
 			width:100%;
 			margin:0;
@@ -1148,29 +1148,29 @@ body.home {
 		margin:0 auto;
 	}
 	.home-slider {
+		margin-left:$gutter*-1;
+		margin-right:$gutter*-1;
 		p {
 			margin-bottom:0;
 		}
-		.slide-smiling-man {
-			.slide-content {
-				width:40%;
-				margin-left:15%;
+		a {
+			color:inherit;
+		}
+		.slide-content {
+			img {
+				display:none;
 			}
 		}
-		.slide-woman {
-			.slide-content {
-				width:35%;
-				margin-left:53%;
-			}
-		}
-		.slide-man {
-			.slide-content {
-				width:35%;
-				margin-left:53%;
-				img {
-					display:none;
-				}
-			}
+	}
+}
+
+/******************************************
+Subscriptions Page
+******************************************/
+body.page-template-page-subscriptions {
+	.entry-content {
+		.available-subscriptions {
+			margin-bottom:$gutter;
 		}
 	}
 }
@@ -1249,6 +1249,9 @@ html.guru {
 				height:auto;
 			}
 		}
+	}
+	.fa-subscription-account-ihc::before {
+		content:'\f1b2';
 	}
 	.available-subscriptions {
 		display:flex;

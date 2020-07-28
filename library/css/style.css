@@ -1737,7 +1737,7 @@ NAVIGATION STYLES
       left: 50%; }
   .slider .slide {
     position: relative; }
-    .slider .slide img {
+    .slider .slide img.bg {
       display: block;
       width: 100%;
       margin: 0; }
@@ -2393,22 +2393,21 @@ body.home .content-primary {
   max-width: 600px;
   margin: 0 auto; }
 
-body.home .home-slider p {
-  margin-bottom: 0; }
-
-body.home .home-slider .slide-smiling-man .slide-content {
-  width: 40%;
-  margin-left: 15%; }
-
-body.home .home-slider .slide-woman .slide-content {
-  width: 35%;
-  margin-left: 53%; }
-
-body.home .home-slider .slide-man .slide-content {
-  width: 35%;
-  margin-left: 53%; }
-  body.home .home-slider .slide-man .slide-content img {
+body.home .home-slider {
+  margin-left: -16px;
+  margin-right: -16px; }
+  body.home .home-slider p {
+    margin-bottom: 0; }
+  body.home .home-slider a {
+    color: inherit; }
+  body.home .home-slider .slide-content img {
     display: none; }
+
+/******************************************
+Subscriptions Page
+******************************************/
+body.page-template-page-subscriptions .entry-content .available-subscriptions {
+  margin-bottom: 16px; }
 
 /******************************************
 Upload Page
@@ -2476,6 +2475,9 @@ html.guru body.nama .ihc-user-page-top-ap-wrapper {
     height: 100%; }
   html.guru body.nama .ihc-user-page-top-ap-wrapper .ihc-top-levels {
     height: auto; }
+
+html.guru .fa-subscription-account-ihc::before {
+  content: '\f1b2'; }
 
 html.guru .available-subscriptions {
   display: -webkit-box;
@@ -2661,12 +2663,8 @@ PAGE SPECIFIC
 ******************************************/
   body.home .home-slider {
     font-size: 2em; }
-    body.home .home-slider .slide-man {
-      font-size: .75em; }
-      body.home .home-slider .slide-man .slide-content img {
-        display: block;
-        width: 100px;
-        margin: 16px auto 0; }
+    body.home .home-slider .slide-content img {
+      display: block; }
   /******************************************
 Single Screenplay Page
 ******************************************/
