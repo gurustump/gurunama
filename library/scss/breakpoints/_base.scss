@@ -49,7 +49,7 @@ html {
 		}
 	}
 	&.theme-dark {
-		background:$black;
+		background:$nama-dark-red;
 		&.scrolled {
 			.header {
 				background-image:none;
@@ -58,16 +58,17 @@ html {
 		}
 		body {
 			color:$text-color-theme-dark;
-			background-color:$black;
+			background-color:$nama-dark-red;
 		}
 		#container {
 			#content {
-				background:$black url(../images/gray-dark-grunge.png);
+				background:$nama-dark-red url(../images/dark-grunge.png);
 			}
 		}
 		.header {
 			@include linear-gradient($black, rgba($black,0));
 			background-color:transparent;
+			transition:background-color $transition-speed;
 		}
 		.main-nav-container {
 			background-color:$black;
@@ -101,6 +102,12 @@ html {
 				}
 			}
 		}
+		.info-box {
+			border-color:$border-color-theme-dark;
+		}
+		.home-slider {
+			color:$text-color;
+		}
 		.footer {
 			background-image:url(../images/gray-dark-grunge.png), linear-gradient(lighten($black,10%),$black);
 			//background:lighten($black,10%) url(../images/gray-dark-grunge.png);
@@ -128,6 +135,22 @@ html {
 						}
 					}
 				}
+			}
+		}
+		.ihc-ap-menu .ihc-ap-menu-item,.ihc-ap-menu .ihc-ap-menu-item {
+			a, .fa-ihc {
+				color:$white;
+			}
+		}
+		body.single-screenplay {
+			.article-header {
+				background:rgba($black,.2);
+				h1 {
+					border-color:$border-color-theme-dark;
+				}
+			}
+			.about-writer {
+				background:rgba($black,.2);
 			}
 		}
 	}
@@ -588,6 +611,7 @@ POSTS & CONTENT STYLES
 		width:100%;
 		border:1px solid $border-color;
 		margin-bottom:$gutter;
+		background:$white;
 		caption {
 			margin: 0 0 7px;
 			font-size: 0.75em;

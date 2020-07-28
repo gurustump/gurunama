@@ -1333,15 +1333,15 @@ html.mobile-nav-active body {
     overflow-x: hidden; }
 
 html.theme-dark {
-  background: #000; }
+  background: #6a241c; }
   html.theme-dark.scrolled .header {
     background-image: none;
     background-color: rgba(0, 0, 0, 0.9); }
   html.theme-dark body {
     color: #fff;
-    background-color: #000; }
+    background-color: #6a241c; }
   html.theme-dark #container #content {
-    background: #000 url(../images/gray-dark-grunge.png); }
+    background: #6a241c url(../images/dark-grunge.png); }
   html.theme-dark .header {
     background-color: #000;
     background-image: -webkit-linear-gradient(  #000, rgba(0, 0, 0, 0));
@@ -1349,7 +1349,10 @@ html.theme-dark {
     background-image: -o-linear-gradient(  #000, rgba(0, 0, 0, 0));
     background-image: -webkit-gradient(  linear, left top, left bottom, from(#000), to(rgba(0, 0, 0, 0)));
     background-image: linear-gradient(  #000, rgba(0, 0, 0, 0));
-    background-color: transparent; }
+    background-color: transparent;
+    -webkit-transition: background-color 375ms;
+    -o-transition: background-color 375ms;
+    transition: background-color 375ms; }
   html.theme-dark .main-nav-container {
     background-color: #000; }
   html.theme-dark .main-menu {
@@ -1367,6 +1370,10 @@ html.theme-dark {
       background-color: #fff; }
     html.theme-dark .trigger-nav.active .ic > span {
       background-color: #white; }
+  html.theme-dark .info-box {
+    border-color: rgba(255, 255, 255, 0.15); }
+  html.theme-dark .home-slider {
+    color: #000; }
   html.theme-dark .footer {
     background-image: url(../images/gray-dark-grunge.png), -webkit-gradient(linear, left top, left bottom, from(#1a1a1a), to(#000));
     background-image: url(../images/gray-dark-grunge.png), -webkit-linear-gradient(#1a1a1a, #000);
@@ -1381,6 +1388,14 @@ html.theme-dark {
     color: #999; }
     html.theme-dark .footer-links ul li a:hover {
       color: #fff; }
+  html.theme-dark .ihc-ap-menu .ihc-ap-menu-item a, html.theme-dark .ihc-ap-menu .ihc-ap-menu-item .fa-ihc, html.theme-dark .ihc-ap-menu .ihc-ap-menu-item a, html.theme-dark .ihc-ap-menu .ihc-ap-menu-item .fa-ihc {
+    color: #fff; }
+  html.theme-dark body.single-screenplay .article-header {
+    background: rgba(0, 0, 0, 0.2); }
+    html.theme-dark body.single-screenplay .article-header h1 {
+      border-color: rgba(255, 255, 255, 0.15); }
+  html.theme-dark body.single-screenplay .about-writer {
+    background: rgba(0, 0, 0, 0.2); }
 
 body {
   height: 100%;
@@ -1866,7 +1881,8 @@ POSTS & CONTENT STYLES
 .entry-content table {
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 16px; }
+  margin-bottom: 16px;
+  background: #fff; }
   .entry-content table caption {
     margin: 0 0 7px;
     font-size: 0.75em;
