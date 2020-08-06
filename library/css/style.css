@@ -1337,11 +1337,17 @@ html.theme-dark {
   html.theme-dark.scrolled .header {
     background-image: none;
     background-color: rgba(0, 0, 0, 0.9); }
+  html.theme-dark.mobile-nav-active body header.header {
+    background-color: #000; }
   html.theme-dark body {
     color: #fff;
     background-color: #6a241c; }
   html.theme-dark #container #content {
-    background: #6a241c url(../images/dark-grunge.png); }
+    background-color: #6a241c;
+    background-image: url(../images/dark-grunge.png), -webkit-gradient(linear, left top, left bottom, from(#2d0f0c), color-stop(#6a241c), to(#2d0f0c));
+    background-image: url(../images/dark-grunge.png), -webkit-linear-gradient(#2d0f0c, #6a241c, #2d0f0c);
+    background-image: url(../images/dark-grunge.png), -o-linear-gradient(#2d0f0c, #6a241c, #2d0f0c);
+    background-image: url(../images/dark-grunge.png), linear-gradient(#2d0f0c, #6a241c, #2d0f0c); }
   html.theme-dark .header {
     background-color: #000;
     background-image: -webkit-linear-gradient(  #000, rgba(0, 0, 0, 0));
@@ -1353,6 +1359,8 @@ html.theme-dark {
     -webkit-transition: background-color 375ms;
     -o-transition: background-color 375ms;
     transition: background-color 375ms; }
+  html.theme-dark #logo a {
+    background-image: url(../images/logo-nama-dark.png); }
   html.theme-dark .main-nav-container {
     background-color: #000; }
   html.theme-dark .main-menu {
@@ -1367,9 +1375,9 @@ html.theme-dark {
   html.theme-dark .trigger-nav {
     color: #000; }
     html.theme-dark .trigger-nav .ic > span {
-      background-color: #fff; }
+      background-color: #0098a7; }
     html.theme-dark .trigger-nav.active .ic > span {
-      background-color: #white; }
+      background-color: #fff; }
   html.theme-dark .info-box {
     border-color: rgba(255, 255, 255, 0.15); }
   html.theme-dark .home-slider {
@@ -1379,11 +1387,17 @@ html.theme-dark {
     background-image: url(../images/gray-dark-grunge.png), -webkit-linear-gradient(#1a1a1a, #000);
     background-image: url(../images/gray-dark-grunge.png), -o-linear-gradient(#1a1a1a, #000);
     background-image: url(../images/gray-dark-grunge.png), linear-gradient(#1a1a1a, #000);
-    color: #999; }
+    color: #999;
+    color: #0098a7; }
+    html.theme-dark .footer .footer-logo a {
+      background-image: url(../images/logo-nama-dark.png);
+      background-color: transparent;
+      border-color: transparent; }
     html.theme-dark .footer .social .svg-container svg {
-      fill: #666666; }
+      fill: #666666;
+      fill: #007883; }
     html.theme-dark .footer .social .svg-container:hover svg {
-      fill: #999; }
+      fill: #0098a7; }
   html.theme-dark .footer-links ul li a {
     color: #999; }
     html.theme-dark .footer-links ul li a:hover {
@@ -2777,7 +2791,18 @@ Stylesheet: Small Desktop Stylsheet
   html.theme-dark .main-menu {
     background: transparent; }
     html.theme-dark .main-menu li a {
-      border: 0; }
+      border: 0;
+      color: #00c6da; }
+      html.theme-dark .main-menu li a:hover {
+        color: #fff;
+        background-color: #bd0831; }
+    html.theme-dark .main-menu li ul.children, html.theme-dark .main-menu li ul.sub-menu {
+      text-align: left; }
+      html.theme-dark .main-menu li ul.children li a, html.theme-dark .main-menu li ul.sub-menu li a {
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #fff; }
+        html.theme-dark .main-menu li ul.children li a:hover, html.theme-dark .main-menu li ul.sub-menu li a:hover {
+          background-color: #bd0831; }
   /*********************
 NAVIGATION STYLES
 *********************/

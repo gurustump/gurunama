@@ -56,19 +56,30 @@ html {
 				background-color:rgba($black,.9);
 			}
 		}
+		&.mobile-nav-active {
+			body {
+				header.header {
+					background-color:$black;
+				}
+			}
+		}
 		body {
 			color:$text-color-theme-dark;
 			background-color:$nama-dark-red;
 		}
 		#container {
 			#content {
-				background:$nama-dark-red url(../images/dark-grunge.png);
+				background-color:$nama-dark-red;
+				background-image:url(../images/dark-grunge.png),linear-gradient(darken($nama-dark-red,15%),$nama-dark-red,darken($nama-dark-red,15%));
 			}
 		}
 		.header {
 			@include linear-gradient($black, rgba($black,0));
 			background-color:transparent;
 			transition:background-color $transition-speed;
+		}
+		#logo a {
+			background-image:url(../images/logo-nama-dark.png);
 		}
 		.main-nav-container {
 			background-color:$black;
@@ -91,13 +102,13 @@ html {
 			color:$black;
 			.ic {
 				& > span {
-					background-color:$white;
+					background-color:$nama-blue;
 				}
 			}
 			&.active {
 				.ic {
 					& > span {
-						background-color:#white;
+						background-color:$white;
 					}
 				}
 			}
@@ -112,14 +123,21 @@ html {
 			background-image:url(../images/gray-dark-grunge.png), linear-gradient(lighten($black,10%),$black);
 			//background:lighten($black,10%) url(../images/gray-dark-grunge.png);
 			color:$meta-gray;
+			color:$nama-blue;
+			.footer-logo a {
+				background-image:url(../images/logo-nama-dark.png);
+				background-color:transparent;
+				border-color:transparent;
+			}
 			.social {
 				.svg-container {
 					svg {
 						fill:darken($meta-gray,20%);
+						fill:darken($nama-blue,7%);
 					}
 					&:hover {
 						svg {
-							fill:$meta-gray;
+							fill:$nama-blue;
 						}
 					}
 				}

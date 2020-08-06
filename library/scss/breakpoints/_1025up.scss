@@ -16,6 +16,23 @@ html {
 			li {
 				a {
 					border:0;
+					color:lighten($nama-blue,10%);
+					&:hover {
+						color:$white;
+						background-color:$nama-red;
+					}
+				}
+				ul.children, ul.sub-menu {
+					text-align:left;
+					li {
+						a {
+							background-color:rgba($black,.9);
+							color:$white;
+							&:hover {
+								background-color:$nama_red;
+							}
+						}
+					}
 				}
 			}
 		}
