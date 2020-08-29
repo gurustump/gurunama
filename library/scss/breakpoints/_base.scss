@@ -119,6 +119,21 @@ html {
 		.home-slider {
 			color:$text-color;
 		}
+		.accordion-item {
+			&.accordion-closed {
+				.accordion-toggle {
+					&:after {
+						border-top-color:$white;
+					}
+				}
+			}
+			.accordion-toggle {
+				background:rgba($white,.1);
+				&:after {
+					border-bottom-color:$white;
+				}
+			}
+		}
 		.footer {
 			background-image:url(../images/gray-dark-grunge.png), linear-gradient(lighten($black,10%),$black);
 			//background:lighten($black,10%) url(../images/gray-dark-grunge.png);
@@ -169,6 +184,23 @@ html {
 			}
 			.about-writer {
 				background:rgba($black,.2);
+			}
+			.glsr-review {
+				.accordion-content-inner {
+					border-color:$border-color-theme-dark;
+				}
+			}
+			.rating {
+				border-color:$border-color-theme-dark;
+				padding:$gutter;
+				& > div {
+					&:after {
+						background-color:rgba($white,.5);
+					}
+				}
+			}
+			.text-container {
+				border-color:rgba($border-color-theme-dark,.1);
 			}
 		}
 	}
@@ -587,6 +619,55 @@ html.ov-active {
 		margin:0 auto;
 		background:$white;
 		@include v-center;
+	}
+}
+/******************************************************************
+SIMPLE ACCORDION STYLES
+******************************************************************/
+.accordion-item {
+	&.accordion-closed {
+		.accordion-toggle {
+			&:before {
+				content:"Show ";
+			}
+			&:after {
+				border-top:16px solid $black;
+				border-bottom-color:transparent !important;
+				top:70%;
+			}
+		}
+		.accordion-content {
+			max-height:0 !important;
+		}
+	}
+	.accordion-toggle {
+		background:rgba($black,.1);
+		min-height:3em;
+		line-height:3em;
+		position:relative;
+		cursor:pointer;
+		padding-right:$gutter;
+		&:before {
+			content:"Hide ";
+			@extend %btn;
+			font-size:.75em;
+			padding-left:8px;
+			padding-right:8px;
+			background-color:rgba($black,.5);
+			margin-right:$gutter/2;
+		}
+		@include tri(top, 12px, 16px, $black);
+		&:after {
+			position:absolute;
+			right:$gutter;
+			top:50%;
+		}
+	}
+	.accordion-content {
+		max-height:7000px;
+		overflow:hidden;
+		transition:max-height $transition-speed*2;
+		@include box-sizing;
 	}
 }
 
@@ -1414,6 +1495,71 @@ body.single-screenplay {
 		}
 		.secondary-divider {
 			margin-bottom:$gutter*.75;
+		}
+	}
+	.glsr-review {
+		.date {
+			font-size:.75em;
+			font-weight:normal;
+		}
+		margin-bottom:$gutter;
+		.accordion-content-inner {
+			border:1px solid $border-color;
+			padding:$gutter;
+		}
+		.ratings {
+			display:flex;
+			margin-bottom:$gutter;
+		}
+		.rating-container {
+			h4 {
+				height:2em;
+				margin-bottom:0;
+				font-size:.75em;
+				font-weight:normal;
+				text-align:center;
+			}
+		}
+		.rating {
+			position:relative;
+			border:1px solid $border-color;
+			height:3em;
+			width:3.75em;
+			&:after {
+				position:absolute;
+				content:"10";
+				bottom:$gutter;
+				right:$gutter;
+			}
+			& > div {
+				font-size:2em;
+				font-weight:bold;
+				position:absolute;
+				top:$gutter;
+				left:$gutter;
+				width:1em;
+				text-align:right;
+				&:after {
+					position:absolute;
+					font-weight:300;
+					content:"";
+					width:1px;
+					height:1em;
+					background-color:rgba($black,.5);
+					transform:rotate(45deg);
+					top:$gutter;
+					left:$gutter*2.5;
+				}
+			}
+		}
+		.text-container {
+			margin-top:$gutter;
+			border-top:1px solid rgba($border-color,.05);
+			padding-top:$gutter;
+			h4 {
+				font-size:1.1em;
+				margin-bottom:$gutter/4;
+			}
 		}
 	}
 }

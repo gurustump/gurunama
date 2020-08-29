@@ -413,11 +413,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-
 .image-replacement,
 .ir {
   text-indent: 100%;
@@ -839,7 +834,7 @@ Here's a quick video to show how it works:
 http://www.youtube.com/watch?v=hwdVpKiJzac
 
 *********************/
-.btn, .btn-blue, .comment-reply-link, #submit, .btn-red {
+.btn, .btn-blue, .comment-reply-link, #submit, .btn-red, .accordion-item .accordion-toggle:before {
   display: inline-block;
   position: relative;
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -858,12 +853,12 @@ http://www.youtube.com/watch?v=hwdVpKiJzac
   -ms-transition: background-color 375ms ease-in-out;
   -o-transition: background-color 375ms ease-in-out;
   transition: background-color 375ms ease-in-out; }
-  .btn:hover, .btn-blue:hover, .comment-reply-link:hover, #submit:hover, .btn-red:hover {
+  .btn:hover, .btn-blue:hover, .comment-reply-link:hover, #submit:hover, .btn-red:hover, .accordion-item .accordion-toggle:hover:before {
     color: #fff;
     background-color: gray;
     text-decoration: none;
     outline: none; }
-  .btn:visited, .btn-blue:visited, .comment-reply-link:visited, #submit:visited, .btn-red:visited, .btn:hover:visited, .btn-blue:hover:visited, .comment-reply-link:hover:visited, #submit:hover:visited, .btn-red:hover:visited {
+  .btn:visited, .btn-blue:visited, .comment-reply-link:visited, #submit:visited, .btn-red:visited, .accordion-item .accordion-toggle:visited:before, .btn:hover:visited, .btn-blue:hover:visited, .comment-reply-link:hover:visited, #submit:hover:visited, .btn-red:hover:visited, .accordion-item .accordion-toggle:hover:visited:before {
     color: #fff; }
 
 /*
@@ -909,7 +904,7 @@ and it will create a button dependant on those variables.
     transform: translateY(-50%); }
 
 @media only screen and (min-width: 768px) {
-  .btn, .btn-blue, .comment-reply-link, #submit, .btn-red {
+  .btn, .btn-blue, .comment-reply-link, #submit, .btn-red, .accordion-item .accordion-toggle:before {
     font-size: 1.5em;
     padding: 0 24px; }
   .btn-upload {
@@ -1382,6 +1377,12 @@ html.theme-dark {
     border-color: rgba(255, 255, 255, 0.15); }
   html.theme-dark .home-slider {
     color: #000; }
+  html.theme-dark .accordion-item.accordion-closed .accordion-toggle:after {
+    border-top-color: #fff; }
+  html.theme-dark .accordion-item .accordion-toggle {
+    background: rgba(255, 255, 255, 0.1); }
+    html.theme-dark .accordion-item .accordion-toggle:after {
+      border-bottom-color: #fff; }
   html.theme-dark .footer {
     background-image: url(../images/gray-dark-grunge.png), -webkit-gradient(linear, left top, left bottom, from(#1a1a1a), to(#000));
     background-image: url(../images/gray-dark-grunge.png), -webkit-linear-gradient(#1a1a1a, #000);
@@ -1410,6 +1411,15 @@ html.theme-dark {
       border-color: rgba(255, 255, 255, 0.15); }
   html.theme-dark body.single-screenplay .about-writer {
     background: rgba(0, 0, 0, 0.2); }
+  html.theme-dark body.single-screenplay .glsr-review .accordion-content-inner {
+    border-color: rgba(255, 255, 255, 0.15); }
+  html.theme-dark body.single-screenplay .rating {
+    border-color: rgba(255, 255, 255, 0.15);
+    padding: 16px; }
+    html.theme-dark body.single-screenplay .rating > div:after {
+      background-color: rgba(255, 255, 255, 0.5); }
+  html.theme-dark body.single-screenplay .text-container {
+    border-color: rgba(255, 255, 255, 0.1); }
 
 body {
   height: 100%;
@@ -1867,6 +1877,68 @@ html.ov-active {
     transform: translateY(-50%);
     position: relative;
     top: 50%; }
+
+/******************************************************************
+SIMPLE ACCORDION STYLES
+******************************************************************/
+.accordion-item.accordion-closed .accordion-toggle:before {
+  content: "Show "; }
+
+.accordion-item.accordion-closed .accordion-toggle:after {
+  border-top: 16px solid #000;
+  border-bottom-color: transparent !important;
+  top: 70%; }
+
+.accordion-item.accordion-closed .accordion-content {
+  max-height: 0 !important; }
+
+.accordion-item .accordion-toggle {
+  background: rgba(0, 0, 0, 0.1);
+  min-height: 3em;
+  line-height: 3em;
+  position: relative;
+  cursor: pointer;
+  padding-right: 16px; }
+  .accordion-item .accordion-toggle:before {
+    content: "Hide ";
+    font-size: .75em;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-right: 8px; }
+  .accordion-item .accordion-toggle:after {
+    content: "";
+    width: 0;
+    height: 0;
+    display: inline-block;
+    float: none;
+    margin: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: relative;
+    top: 50%;
+    border-bottom: 16px solid #000; }
+  .accordion-item .accordion-toggle:after {
+    position: absolute;
+    right: 16px;
+    top: 50%; }
+
+.accordion-item .accordion-content {
+  max-height: 7000px;
+  overflow: hidden;
+  -webkit-transition: max-height 750ms;
+  -o-transition: max-height 750ms;
+  transition: max-height 750ms;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box; }
 
 /*********************
 POSTS & CONTENT STYLES
@@ -2615,6 +2687,63 @@ body.single-screenplay .about-writer {
       padding-bottom: 0; }
   body.single-screenplay .about-writer .secondary-divider {
     margin-bottom: 12px; }
+
+body.single-screenplay .glsr-review {
+  margin-bottom: 16px; }
+  body.single-screenplay .glsr-review .date {
+    font-size: .75em;
+    font-weight: normal; }
+  body.single-screenplay .glsr-review .accordion-content-inner {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 16px; }
+  body.single-screenplay .glsr-review .ratings {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 16px; }
+  body.single-screenplay .glsr-review .rating-container h4 {
+    height: 2em;
+    margin-bottom: 0;
+    font-size: .75em;
+    font-weight: normal;
+    text-align: center; }
+  body.single-screenplay .glsr-review .rating {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 3em;
+    width: 3.75em; }
+    body.single-screenplay .glsr-review .rating:after {
+      position: absolute;
+      content: "10";
+      bottom: 16px;
+      right: 16px; }
+    body.single-screenplay .glsr-review .rating > div {
+      font-size: 2em;
+      font-weight: bold;
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 1em;
+      text-align: right; }
+      body.single-screenplay .glsr-review .rating > div:after {
+        position: absolute;
+        font-weight: 300;
+        content: "";
+        width: 1px;
+        height: 1em;
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 16px;
+        left: 40px; }
+  body.single-screenplay .glsr-review .text-container {
+    margin-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 16px; }
+    body.single-screenplay .glsr-review .text-container h4 {
+      font-size: 1.1em;
+      margin-bottom: 4px; }
 
 /*********************
 LARGER MOBILE DEVICES

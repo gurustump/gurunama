@@ -135,11 +135,25 @@
 									<?php if (user_is_admin()
 									|| check_subscription_level('professional')
 									|| get_the_author_meta('ID') == get_current_user_id() ) { ?>
-									<h3>Script</h3>
-									<div class="info-box">
-										<?php echo do_shortcode('[pdf-embedder url="'.get_post_meta(get_the_ID(),'_guru_screenplay_file',true).'"]'); ?>
-									</div>
+										<h3>Script</h3>
+										<div class="info-box">
+											<?php echo do_shortcode('[pdf-embedder url="'.get_post_meta(get_the_ID(),'_guru_screenplay_file',true).'"]'); ?>
+										</div>
+										<?php if (user_is_admin() || check_subscription_level('professional')) { ?>
+										<h3>Write a Review</h3>
+										<div class="info-box">
+										<?php // echo do_shortcode('[WPCR_SHOW POSTID="'.get_the_ID().'" SHOWFORM="1" HIDEREVIEWS="1"]'); ?>
+										
+										<?php echo do_shortcode('[site_reviews_form assign_to="'.get_the_ID().'" class="script-review-form" hide="email,name,terms,rating,title,content"]'); ?>
+										</div>
+										<?php } ?>
 									<?php } ?>
+									<h3>Reviews</h3>
+									<div class="info-box SIMPLE_ACCORDION">
+										<?php // echo do_shortcode('[WPCR_SHOW POSTID="'.get_the_ID().'" NUM="5" SHOWFORM="0" HIDEREVIEWS="0"]'); ?>
+										
+										<?php echo do_shortcode('[site_reviews assigned_to="'.get_the_ID().'" display="1000"]'); ?>
+									</div>
 								</div>
 								<?php if ($hasContentSecondary) { ?>
 								<div class="content-secondary">

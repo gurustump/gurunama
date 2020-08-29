@@ -190,6 +190,13 @@ jQuery(document).ready(function($) {
 		}
 	});
 	
+	if ($('.SIMPLE_ACCORDION').length > 0) {
+		$('.ACCORDION_TOGGLE').click(function() {
+			console.log('worked');
+			$(this).closest('.ACCORDION_ITEM').toggleClass('accordion-closed');
+		});
+	}
+	
 	// Screenplay Upload/Edit Page
 	if (isScreenplayEdit) {
 		console.log('working');

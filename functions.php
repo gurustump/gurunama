@@ -747,4 +747,318 @@ function gurustump_gallery_shortcode( $attr ) {
 	return $output;
 } // end gurustump_gallery_shortcode
 
+/***************************************************************************
+****************************************************************************
+ Site Reviews 
+***************************************************************************/
+
+add_action('admin_init', function () {
+    add_post_type_support('site-review', 'custom-fields');
+});
+/**
+ * Hides the submission form after a review has been submitted
+ * Paste this in your active theme's functions.php file
+ *
+ * @param string $script
+ * @return string
+ */
+add_filter('site-reviews/enqueue/public/inline-script', function ($script) {
+	return $script."
+	document.addEventListener('site-reviews/after/submission', function (ev) {
+		if (false !== ev.detail.errors) return;
+		ev.detail.form.classList.add('glsr-hide-form');
+		ev.detail.form.insertAdjacentHTML('afterend', '<p>' + ev.detail.message + '</p>');
+	});";
+});
+/**
+ * Hides the submission form from registered users who have already submitted a review
+ * Paste this in your active theme's functions.php file
+ *
+ * @param string $template
+ * @return string
+ */
+add_filter('site-reviews/rendered/template/reviews-form', function ($template) {
+	return glsr('Modules\ReviewLimits')->hasReachedLimit(array('assign_to' => get_the_ID()))
+		? sprintf('<p>%s</p>', __('You have already submitted a review for this script.'))
+		: $template;
+});
+
+//
+// ADDING CUSTOM FIELDS TO THE SUBMISSION FORM IS NOT ACTIVELY SUPPORTED!
+// However, if you would like to try and do this on your own, this should help get you started.
+//
+
+/**
+ * Modifies the submission form fields
+ * Paste this in your active theme's functions.php file.
+ * @param array $config
+ * @return array
+ */
+add_filter('site-reviews/config/forms/submission-form', function ($config) {
+	$config['overall_rating'] = [
+		'label' => __('Overall Rating', 'your_theme_domain'),
+		'options' => [
+			'' => __('', 'your_theme_domain'),
+			'0' => __('0', 'your_theme_domain'),
+			'1' => __('1', 'your_theme_domain'),
+			'2' => __('2', 'your_theme_domain'),
+			'3' => __('3', 'your_theme_domain'),
+			'4' => __('4', 'your_theme_domain'),
+			'5' => __('5', 'your_theme_domain'),
+			'6' => __('6', 'your_theme_domain'),
+			'7' => __('7', 'your_theme_domain'),
+			'8' => __('8', 'your_theme_domain'),
+			'9' => __('9', 'your_theme_domain'),
+			'10' => __('10', 'your_theme_domain'),
+		],
+		'required' => true,
+		'type' => 'select',
+	];
+	$config['premise'] = [
+		'label' => __('Premise', 'your_theme_domain'),
+		'options' => [
+			'' => __('', 'your_theme_domain'),
+			'0' => __('0', 'your_theme_domain'),
+			'1' => __('1', 'your_theme_domain'),
+			'2' => __('2', 'your_theme_domain'),
+			'3' => __('3', 'your_theme_domain'),
+			'4' => __('4', 'your_theme_domain'),
+			'5' => __('5', 'your_theme_domain'),
+			'6' => __('6', 'your_theme_domain'),
+			'7' => __('7', 'your_theme_domain'),
+			'8' => __('8', 'your_theme_domain'),
+			'9' => __('9', 'your_theme_domain'),
+			'10' => __('10', 'your_theme_domain'),
+		],
+		'required' => true,
+		'type' => 'select',
+	];
+	$config['plot'] = [
+		'label' => __('Plot', 'your_theme_domain'),
+		'options' => [
+			'' => __('', 'your_theme_domain'),
+			'0' => __('0', 'your_theme_domain'),
+			'1' => __('1', 'your_theme_domain'),
+			'2' => __('2', 'your_theme_domain'),
+			'3' => __('3', 'your_theme_domain'),
+			'4' => __('4', 'your_theme_domain'),
+			'5' => __('5', 'your_theme_domain'),
+			'6' => __('6', 'your_theme_domain'),
+			'7' => __('7', 'your_theme_domain'),
+			'8' => __('8', 'your_theme_domain'),
+			'9' => __('9', 'your_theme_domain'),
+			'10' => __('10', 'your_theme_domain'),
+		],
+		'required' => true,
+		'type' => 'select',
+	];
+	$config['character'] = [
+		'label' => __('Character', 'your_theme_domain'),
+		'options' => [
+			'' => __('', 'your_theme_domain'),
+			'0' => __('0', 'your_theme_domain'),
+			'1' => __('1', 'your_theme_domain'),
+			'2' => __('2', 'your_theme_domain'),
+			'3' => __('3', 'your_theme_domain'),
+			'4' => __('4', 'your_theme_domain'),
+			'5' => __('5', 'your_theme_domain'),
+			'6' => __('6', 'your_theme_domain'),
+			'7' => __('7', 'your_theme_domain'),
+			'8' => __('8', 'your_theme_domain'),
+			'9' => __('9', 'your_theme_domain'),
+			'10' => __('10', 'your_theme_domain'),
+		],
+		'required' => true,
+		'type' => 'select',
+	];
+	$config['dialogue'] = [
+		'label' => __('Dialogue', 'your_theme_domain'),
+		'options' => [
+			'' => __('', 'your_theme_domain'),
+			'0' => __('0', 'your_theme_domain'),
+			'1' => __('1', 'your_theme_domain'),
+			'2' => __('2', 'your_theme_domain'),
+			'3' => __('3', 'your_theme_domain'),
+			'4' => __('4', 'your_theme_domain'),
+			'5' => __('5', 'your_theme_domain'),
+			'6' => __('6', 'your_theme_domain'),
+			'7' => __('7', 'your_theme_domain'),
+			'8' => __('8', 'your_theme_domain'),
+			'9' => __('9', 'your_theme_domain'),
+			'10' => __('10', 'your_theme_domain'),
+		],
+		'required' => true,
+		'type' => 'select',
+	];
+	$config['setting'] = [
+		'label' => __('Setting', 'your_theme_domain'),
+		'options' => [
+			'' => __('', 'your_theme_domain'),
+			'0' => __('0', 'your_theme_domain'),
+			'1' => __('1', 'your_theme_domain'),
+			'2' => __('2', 'your_theme_domain'),
+			'3' => __('3', 'your_theme_domain'),
+			'4' => __('4', 'your_theme_domain'),
+			'5' => __('5', 'your_theme_domain'),
+			'6' => __('6', 'your_theme_domain'),
+			'7' => __('7', 'your_theme_domain'),
+			'8' => __('8', 'your_theme_domain'),
+			'9' => __('9', 'your_theme_domain'),
+			'10' => __('10', 'your_theme_domain'),
+		],
+		'required' => true,
+		'type' => 'select',
+	];
+	$config['era'] = [
+		'label' => __('Era', 'your_theme_domain'),
+		'placeholder' => __('Modern Era, Period', 'your_theme_domain'),
+		'type' => 'text',
+	];
+	$config['locations'] = [
+		'label' => __('Locations', 'your_theme_domain'),
+		'placeholder' => __('', 'your_theme_domain'),
+		'type' => 'text',
+	];
+	$config['logline'] = [
+		'label' => __('Logline', 'your_theme_domain'),
+		'placeholder' => __('', 'your_theme_domain'),
+		'type' => 'textarea',
+	];
+	$config['strengths'] = [
+		'label' => __('Strengths', 'your_theme_domain'),
+		'placeholder' => __('', 'your_theme_domain'),
+		'type' => 'textarea',
+	];
+	$config['weaknesses'] = [
+		'label' => __('Weaknesses', 'your_theme_domain'),
+		'placeholder' => __('', 'your_theme_domain'),
+		'type' => 'textarea',
+	];
+	return $config;
+});
+ 
+/**
+ * Customises the order of the fields used in the Site Reviews submission form.
+ * @param array $order
+ * @return array
+ */
+add_filter('site-reviews/submission-form/order', function ($order) {
+	// The $order array contains the field keys returned below.
+	// Simply add any custom field keys that you have added and change them to the desired order.
+	return [
+		'overall_rating',
+		'premise',
+		'plot',
+		'character',
+		'dialogue',
+		'setting',
+		'era',
+		'locations',
+		'logline',
+		'strengths',
+		'weaknesses',
+	];
+});
+ 
+/**
+ * Modifies the submission form field rules
+ * Paste this in your active theme's functions.php file.
+ * @param array $rules
+ * @return array
+ */
+/*add_filter('site-reviews/validation/rules', function ($rules) {
+    $rules['opinion'] = 'required|max:100'; // maximum of 100 characters
+    $rules['personnel_rating'] = 'required';
+    $rules['service_rating'] = 'required';
+    return $rules;
+});*/
+
+/**
+ * Perform custom validation here if needed
+ * Paste this in your active theme's functions.php file.
+ * @param bool $isValid
+ * @param array $requestData
+ * @return bool|string
+ */
+add_filter('site-reviews/validate/custom', function ($isValid, $requestData) {
+    // return true on success
+    // or return false on failure
+    // or return a custom error message string on failure
+    return $isValid;
+}, 10, 2);
+
+/**
+ * Triggered immediately after a review is saved
+ * If you are uploading files, this is where you would save them to the database and attach them to the review
+ * Paste this in your active theme's functions.php file.
+ * @param \GeminiLabs\SiteReviews\Review $review
+ * @param \GeminiLabs\SiteReviews\Commands\CreateReview $command
+ * @return void
+ */
+add_action('site-reviews/review/created', function ($review, $command) {
+    // You may access the global $_POST and $_FILES here.
+}, 10, 2);
+ 
+/**
+ * Displays custom fields in the Review's "Details" metabox
+ * Paste this in your active theme's functions.php file.
+ * @param array $metabox
+ * @param \GeminiLabs\SiteReviews\Review $review
+ * @return array
+ */
+add_filter('site-reviews/metabox/details', function ($metabox, $review) {
+    foreach ($review->custom as $key => $value) {
+        if (is_array($value)) {
+            $value = implode(', ', $value);
+        }
+        $metabox[$key] = $value;
+    }
+    return $metabox;
+}, 10, 2);
+
+/**
+ * Set the default values of the custom fields here
+ * Paste this in your active theme's functions.php file.
+ * @param \GeminiLabs\SiteReviews\Review $review
+ * @return \GeminiLabs\SiteReviews\Review
+ */
+add_filter('site-reviews/review/build/before', function ($review) {
+    $review->custom = wp_parse_args($review->custom, [
+		'overall_rating' => '',
+		'premise' => '',
+		'plot' => '',
+		'character' => '',
+		'dialogue' => '',
+		'setting' => '',
+    ]);
+    return $review;
+});
+
+/**
+ * Renders the custom review fields
+ * Paste this in your active theme's functions.php file.
+ * In order to display the rendered custom fields, you will need to use a custom "review.php" template
+ * as shown in the plugin FAQ ("How do I change the order of the review fields?")
+ * and you will need to add your custom template tags to it, for example: {{ name_of_your_custom_field }}
+ * @param array $templateTags
+ * @param \GeminiLabs\SiteReviews\Review $review
+ * @return array
+ */
+add_filter('site-reviews/review/build/after', function ($templateTags, $review) {
+	$ratingKeys = ['personnel_rating', 'service_rating']; // change these as needed
+	foreach ($review->custom as $key => $value) {
+    	if (in_array($key, $ratingKeys)) {
+            $value = glsr_star_rating($value); // render the stars from the rating value
+        }
+        if (is_array($value)) {
+            $list = array_reduce($value, function ($result, $item) {
+                return $result.'<li>'.$item.'</li>';
+            });
+            $value = '<ul>'.$list.'</ul>';
+        }
+        $templateTags[$key] = '<div class="glsr-custom-'.$key.'">'.$value.'</div>';
+    }
+    return $templateTags;
+}, 10, 2);
+
 /* DON'T DELETE THIS CLOSING TAG */ ?>
