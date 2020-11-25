@@ -317,6 +317,7 @@ function upload_user_file($file = array(), $parent_ID) {
 }
 
 $screenwriter_level_limits = array(
+	'writer' => 1,
 	'writer_basic' => 1,
 	'writer_plus' => 2,
 	'writer_pro' => 4,
@@ -499,6 +500,15 @@ function display_screenplay_list_shortcode($atts) {
 	} else {
 		$html .= '<p><a href="'.get_permalink(get_page_by_path('my-account')).'/?ihc_ap_menu=subscription">Upgrade</a> to upload another script to nama.media.</p>';
 	}
+	$html .= '<pre style="display:none;">';
+	$html .= 'subscription level: '.print_r(get_subscription_level(get_current_user_ID()),true)."\n";
+	$html .= 'subscription level writer: '.check_subscription_level('writer')."\n";
+	$html .= 'subscription level writer_basic: '.check_subscription_level('writer_basic')."\n";
+	$html .= 'subscription level writer_plus: '.check_subscription_level('writer_plus')."\n";
+	$html .= 'subscription level writer_pro: '.check_subscription_level('writer_pro')."\n";
+	$html .= 'subscription level writer_pro_unlimited: '.check_subscription_level('writer_pro_unlimited')."\n";
+	$html .= 'subscription level professional: '.check_subscription_level('professional')."\n";
+	$html .= '</pre>';
 	return $html;
 }
 add_shortcode('display_scripts', 'display_screenplay_list_shortcode');
@@ -931,6 +941,11 @@ add_filter('site-reviews/config/forms/submission-form', function ($config) {
 	];
 	$config['weaknesses'] = [
 		'label' => __('Weaknesses', 'your_theme_domain'),
+		'placeholder' => __('', 'your_theme_domain'),
+		'type' => 'textarea',
+	];
+	$config['prospects'] = [
+		'label' => __('Prospects', 'your_theme_domain'),
 		'placeholder' => __('', 'your_theme_domain'),
 		'type' => 'textarea',
 	];

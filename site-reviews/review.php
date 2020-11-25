@@ -42,13 +42,17 @@
 				<h4>Logline</h4>
 				<div class="text-box">{{ logline }}</div>
 			</div>
-			<div class="text-container">
+			<div class="text-container textarea-large">
 				<h4>Strengths</h4>
 				<div class="text-box">{{ strengths }}</div>
 			</div>
-			<div class="text-container">
+			<div class="text-container textarea-large">
 				<h4>Weaknesses</h4>
 				<div class="text-box">{{ weaknesses }}</div>
+			</div>
+			<div class="text-container textarea-large">
+				<h4>Prospects</h4>
+				<div class="text-box">{{ prospects }}</div>
 			</div>
 		</div>
 	</div>

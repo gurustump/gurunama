@@ -134,6 +134,13 @@ html {
 				}
 			}
 		}
+		#screenplayUploadForm {
+			.upload-file-container {
+				.btn-upload.file-selected {
+					color:$white;
+				}
+			}
+		}
 		.footer {
 			background-image:url(../images/gray-dark-grunge.png), linear-gradient(lighten($black,10%),$black);
 			//background:lighten($black,10%) url(../images/gray-dark-grunge.png);
@@ -785,6 +792,23 @@ POSTS & CONTENT STYLES
 		margin-bottom:1.5em;
 	}
 } /* end .entry-content */
+ol.number {
+	list-style:number;
+	margin-left:20px;
+	ol {
+		margin-left:20px;
+	}
+}
+ul.info {
+	list-style:disc;
+	margin-left:20px;
+	ul {
+		margin-left:20px;
+	}
+	& > li > ul {
+		list-style:circle;
+	}
+}
 .info-box {
 	border-top:1px solid $border-color;
 	border-bottom:1px solid $border-color;
@@ -1092,6 +1116,18 @@ COMMENT FORM STYLES
 }
 
 /*********************
+SCRIPT REVIEW FORM
+*********************/
+form.script-review-form.glsr-form {
+	max-height:none;
+	textarea {
+		&[name="site-reviews[strengths]"],&[name="site-reviews[weaknesses]"],&[name="site-reviews[prospects]"] {
+			min-height:5em;
+		}
+	}
+}
+
+/*********************
 SIDEBARS & ASIDES
 *********************/
 .no-widgets {
@@ -1320,7 +1356,11 @@ Upload Page
 		}
 		.btn-upload.file-selected {
 			background-color:transparent;
-			color:black;
+			color:$black;
+			&:before {
+				background-color:rgba($white,.5);
+				box-shadow:0 0 8px $white;
+			}
 		}
 	}
 	.tagging-js {

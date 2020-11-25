@@ -1383,6 +1383,8 @@ html.theme-dark {
     background: rgba(255, 255, 255, 0.1); }
     html.theme-dark .accordion-item .accordion-toggle:after {
       border-bottom-color: #fff; }
+  html.theme-dark #screenplayUploadForm .upload-file-container .btn-upload.file-selected {
+    color: #fff; }
   html.theme-dark .footer {
     background-image: url(../images/gray-dark-grunge.png), -webkit-gradient(linear, left top, left bottom, from(#1a1a1a), to(#000));
     background-image: url(../images/gray-dark-grunge.png), -webkit-linear-gradient(#1a1a1a, #000);
@@ -2036,6 +2038,20 @@ POSTS & CONTENT STYLES
   margin-bottom: 1.5em; }
 
 /* end .entry-content */
+ol.number {
+  list-style: number;
+  margin-left: 20px; }
+  ol.number ol {
+    margin-left: 20px; }
+
+ul.info {
+  list-style: disc;
+  margin-left: 20px; }
+  ul.info ul {
+    margin-left: 20px; }
+  ul.info > li > ul {
+    list-style: circle; }
+
 .info-box {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -2277,6 +2293,14 @@ COMMENT FORM STYLES
 
 .nocomments {
   margin: 0 20px 1.1em; }
+
+/*********************
+SCRIPT REVIEW FORM
+*********************/
+form.script-review-form.glsr-form {
+  max-height: none; }
+  form.script-review-form.glsr-form textarea[name="site-reviews[strengths]"], form.script-review-form.glsr-form textarea[name="site-reviews[weaknesses]"], form.script-review-form.glsr-form textarea[name="site-reviews[prospects]"] {
+    min-height: 5em; }
 
 /*********************
 SIDEBARS & ASIDES
@@ -2529,7 +2553,11 @@ Upload Page
     z-index: -1; }
   #screenplayUploadForm .upload-file-container .btn-upload.file-selected {
     background-color: transparent;
-    color: black; }
+    color: #000; }
+    #screenplayUploadForm .upload-file-container .btn-upload.file-selected:before {
+      background-color: rgba(255, 255, 255, 0.5);
+      -webkit-box-shadow: 0 0 8px #fff;
+      box-shadow: 0 0 8px #fff; }
 
 #screenplayUploadForm .tagging-js {
   max-width: none; }
