@@ -116,6 +116,12 @@ html {
 		.info-box {
 			border-color:$border-color-theme-dark;
 		}
+		.has-page-title-image {
+			.page-title {
+				border-bottom-color:$border-color-theme-dark;
+				
+			}
+		}
 		.home-slider {
 			color:$text-color;
 		}
@@ -693,6 +699,17 @@ POSTS & CONTENT STYLES
 .page-title,
 .entry-title {
 	margin: 0;
+}
+.has-page-title-image {
+	.page-title {
+		margin-bottom:$gutter/2;
+		border-bottom:1px solid $border-color;
+	}
+	margin-bottom:$gutter;
+	.page-title-image {
+		max-width:100%;
+		display:block;
+	}
 }
 
 /* post meta */

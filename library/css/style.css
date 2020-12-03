@@ -1375,6 +1375,8 @@ html.theme-dark {
       background-color: #fff; }
   html.theme-dark .info-box {
     border-color: rgba(255, 255, 255, 0.15); }
+  html.theme-dark .has-page-title-image .page-title {
+    border-bottom-color: rgba(255, 255, 255, 0.15); }
   html.theme-dark .home-slider {
     color: #000; }
   html.theme-dark .accordion-item.accordion-closed .accordion-toggle:after {
@@ -1952,6 +1954,15 @@ POSTS & CONTENT STYLES
 .page-title,
 .entry-title {
   margin: 0; }
+
+.has-page-title-image {
+  margin-bottom: 16px; }
+  .has-page-title-image .page-title {
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .has-page-title-image .page-title-image {
+    max-width: 100%;
+    display: block; }
 
 /* post meta */
 .byline {
